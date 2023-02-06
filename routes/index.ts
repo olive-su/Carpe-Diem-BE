@@ -59,10 +59,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const accessKeyId = 'AKIAZKI6VSSR4WUABAEI';
-const secretAccessKey = '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';
-const region = 'ap-northeast-2';
-const bucketName = 'carpe-diem-media';
+const accessKeyId = '';
+const secretAccessKey = '';
+const region = '';
+const bucketName = '';
 // const region = process.env.AWS_BUCKET_REGION
 // const accessKeyId = process.env.AWS_ACCESS_KEY
 // const secretAccessKey = process.env.AWS_SECRET_KEY
