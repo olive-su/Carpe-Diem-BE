@@ -6,7 +6,9 @@
         "sourceMap": true,
         "outDir": "dist",
         "alwaysStrict": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules"]

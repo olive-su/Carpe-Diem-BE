@@ -97,7 +97,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
         };
 
         s3.upload(params, function (err, data) {
-            console.log(data);
+            console.log('data', data);
             if (err) {
                 throw err;
             }

@@ -3,8 +3,10 @@ import Logger from './loaders/logger';
 import loaders from './loaders';
 import config from './config';
 
+import cameraRouter from './api/camera';
+
+const app = express();
 const startServer = async () => {
-    const app = express();
     await loaders({ expressApp: app });
 
     app.listen(config.port, () => {
@@ -15,4 +17,5 @@ const startServer = async () => {
     });
 };
 
+app.use('/camera', cameraRouter);
 startServer();
