@@ -18,8 +18,9 @@ const dateFormat = (now): string => {
     return now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
 };
 
-const timeFormat = (now): string => {
-    return now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+const timeFormat = (nowTime): string => {
+    const rst = nowTime.split('%3A');
+    return rst.join(':');
 };
 
 const upload = multer({
@@ -27,18 +28,21 @@ const upload = multer({
         s3: s3,
         bucket: config.aws.bucket_name,
         key: function (req, file, cb) {
-            // 파일 포맷 유효성 검사
             const format = file.originalname.split('.').slice(-1)[0];
             const now = new Date();
-            if (!['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webm', 'mp4'].includes(format)) {
+            const userId = req['body'].user_id;
+
+            // 파일 포맷 유효성 검사
+            if (!['webm', 'mp4'].includes(format)) {
                 Logger.error('Invalid file format.');
                 return cb(new Error('Only images are allowed'));
             }
+
             Logger.info(`File uploaded successfully.`);
-            cb(null, `${dateFormat(now)}/${timeFormat(now)}.${format}`);
+            cb(null, `album-video/${req['query'].userId}/${dateFormat(now)}/${timeFormat(file.originalname)}`);
         },
     }),
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-export default upload.single('file');
+export default upload;

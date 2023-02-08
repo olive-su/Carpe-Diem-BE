@@ -1,35 +1,22 @@
-import 'reflect-metadata';
-import { Service, Inject } from 'typedi';
+// import ExpressionModel from '../models';
 import Logger from '../loaders/logger';
-import AWS from 'aws-sdk';
-import fs from 'fs';
+import db from '../models';
 
-import config from '../config';
+const Expression = db.expression;
 
-@Service()
-export default class CameraService {
-    public async uploadVideo(file): Promise<any> {
-        const logger = Logger;
-        const s3 = new AWS.S3({
-            accessKeyId: config.aws.access_key_id,
-            secretAccessKey: config.aws.secret_access_key,
-            region: config.aws.region,
-        });
-        const fileStream = fs.createReadStream(file.path);
+const postCamera = async (expressionDto, callback) => {
+    const expressionData = {
+        userId: expressionDto.user_id,
+        expression: expressionDto.expression,
+        accuracy: expressionDto.accuracy,
+        time: expressionDto.time,
+        videoUrl: expressionDto.video_url,
+    };
+    const expression = await Expression.create(expressionData).catch((err) => {
+        Logger.error(err);
+        return callback(err);
+    });
+    Logger.info(`Success! ${expression}`);
+};
 
-        const params = {
-            Bucket: config.aws.bucket_name,
-            Key: file.originalname,
-            Body: fileStream,
-        };
-
-        s3.upload(params, (err, data) => {
-            console.log('data', data);
-            if (err) {
-                logger.error(err);
-                throw err;
-            }
-            logger.info(`File uploaded successfully. ${data.Location}`);
-        });
-    }
-}
+export default { postCamera };

@@ -3,7 +3,7 @@ import cors from 'cors';
 // import { OpticMiddleware } from '@useoptic/express-middleware';
 // import routes from '@/api';
 // import config from '@/config';
-export default ({ app }) => {
+export default (app) => {
     /**
      * Health Check endpoints
      * @TODO Explain why they are here
