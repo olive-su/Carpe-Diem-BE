@@ -1,29 +1,26 @@
 import { Container } from 'typedi';
 import express, { Request, Response } from 'express';
-import multer from 'multer';
+import upload from '../loaders/multer';
 
-import CameraService from '../services/camera';
+import statusCode from '../constant/statusCode';
 import responseMessage from '../constant/responseMessage';
+import cameraService from '../services/camera';
 
-const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
+const route = express.Router();
 
-router.post('/video', upload.single('file'), async (req: Request, res: Response) => {
-    const cameraServiceInstance = Container.get(CameraService);
+route.post('/', upload.single('file'), async (req: Request, res: Response) => {
+    const expressionDto = JSON.parse(req.body.expressionData);
+
     if (req.file == null) {
-        return res.status(400).json({ message: responseMessage.camera.upload_error });
+        return res.status(statusCode.BAD_REQUEST).json({ message: responseMessage.camera.upload_error });
     }
-    await cameraServiceInstance.uploadVideo(req.file);
-    res.status(201);
+
+    expressionDto['video_url'] = req.file['key'];
+
+    cameraService.postCamera(expressionDto, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.camera.expression_error });
+        else res.status(statusCode.CREATED).send();
+    });
 });
 
-router.post('/', async (req: Request, res: Response) => {
-    const cameraServiceInstance = Container.get(CameraService);
-    if (req.file == null) {
-        return res.status(400).json({ message: responseMessage.camera.expression_error });
-    }
-    await cameraServiceInstance.uploadVideo(req.file);
-    res.status(201);
-});
-
-export default router;
+export default route;
