@@ -6,6 +6,7 @@ import loaders from './loaders';
 import config from './config';
 
 import cameraRouter from './api/camera';
+import cardRouter from './api/card';
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,7 @@ app.use(express.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 app.use('/camera', cameraRouter);
+app.use('/card', cardRouter);
 
 const startServer = async () => {
     await loaders(app);
