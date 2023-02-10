@@ -1,28 +1,30 @@
 import { Model } from 'sequelize';
 
-interface ExpressionAttributes {
-    expressionId: number;
+interface CardAttributes {
+    cardId: number;
     userId: string;
+    albumId: number;
     expressionLabel: string;
-    expressionValue: number;
-    expressionTime: Date;
+    comment: string;
     videoUrl: string;
+    thumbnailUrl: string;
     // other attributes...
 }
 export default (sequelize: any, DataTypes: any): any => {
-    class Expression extends Model<ExpressionAttributes> implements ExpressionAttributes {
-        expressionId!: number;
-        userId!: string;
-        expressionLabel!: string;
-        expressionValue!: number;
-        expressionTime!: Date;
-        videoUrl!: string;
+    class Card extends Model<CardAttributes> implements CardAttributes {
+        cardId: number;
+        userId: string;
+        albumId: number;
+        expressionLabel: string;
+        comment: string;
+        thumbnailUrl: string;
+        videoUrl: string;
         // static associate(models: any) {}
     }
-    Expression.init(
+    Card.init(
         {
-            expressionId: {
-                field: 'expression_id',
+            cardId: {
+                field: 'card_id',
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 allowNull: false,
@@ -33,20 +35,25 @@ export default (sequelize: any, DataTypes: any): any => {
                 type: DataTypes.STRING(50),
                 allowNull: false,
             },
+            albumId: {
+                field: 'album_id',
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
             expressionLabel: {
                 field: 'expression_label',
                 type: DataTypes.STRING(10),
                 allowNull: false,
             },
-            expressionValue: {
-                field: 'expression_value',
-                type: DataTypes.FLOAT,
-                allowNull: false,
+            comment: {
+                field: 'comment',
+                type: DataTypes.STRING(200),
+                allowNull: true,
             },
-            expressionTime: {
-                field: 'expression_time',
-                type: DataTypes.DATE,
-                allowNull: false,
+            thumbnailUrl: {
+                field: 'thumbnail_url',
+                type: DataTypes.STRING(100),
+                allowNull: true,
             },
             videoUrl: {
                 field: 'video_url',
@@ -58,9 +65,9 @@ export default (sequelize: any, DataTypes: any): any => {
             underscored: true,
             freezeTableName: true,
             timestamps: true,
-            tableName: 'expression',
+            tableName: 'card',
             sequelize,
         },
     );
-    return Expression;
+    return Card;
 };

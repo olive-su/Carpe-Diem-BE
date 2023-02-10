@@ -2,8 +2,8 @@ import { Container } from 'typedi';
 import express, { Request, Response } from 'express';
 import upload from '../loaders/multer';
 
-import statusCode from '../constant/statusCode';
-import responseMessage from '../constant/responseMessage';
+import statusCode from '../common/constant/statusCode';
+import responseMessage from '../common/constant/responseMessage';
 import cameraService from '../services/camera';
 
 const route = express.Router();
