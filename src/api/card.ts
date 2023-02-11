@@ -24,4 +24,13 @@ route.get('/:userId/:cardId', async (req: Request, res: Response) => {
     });
 });
 
+route.delete('/:userId/:cardId', async (req: Request, res: Response) => {
+    const cardId = req.params.cardId;
+
+    cardService.destroyCard(cardId, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
 export default route;

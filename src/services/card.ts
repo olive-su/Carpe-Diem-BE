@@ -28,4 +28,16 @@ const getCard = async (cardId, callback) => {
         });
 };
 
-export default { getCards, getCard };
+const destroyCard = async (cardId, callback) => {
+    await Card.destroy({ where: { card_id: cardId } })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, 'DELETE CARD OK');
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getCards, getCard, destroyCard };
