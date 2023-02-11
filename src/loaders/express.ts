@@ -1,8 +1,19 @@
 import express from 'express';
 import cors from 'cors';
+import ApiDocs from '../docs/index';
 // import { OpticMiddleware } from '@useoptic/express-middleware';
 // import routes from '@/api';
 // import config from '@/config';
+
+function getSwaggerOption() {
+    const apiDocs = new ApiDocs();
+    apiDocs.init();
+
+    return apiDocs.getSwaggerOption();
+}
+
+const { swaggerUI, specs, setUpoption } = getSwaggerOption();
+
 export default (app) => {
     /**
      * Health Check endpoints
@@ -41,6 +52,7 @@ export default (app) => {
     //     }),
     // );
 
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs, setUpoption));
     /// catch 404 and forward to error handler
     app.use((req, res, next) => {
         const err = new Error('Not Found');
