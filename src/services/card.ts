@@ -4,7 +4,7 @@ import db from '../models';
 
 const Card = db.card;
 
-const getCard = async (userId, callback) => {
+const getCards = async (userId, callback) => {
     await Card.findAll({ where: { user_id: userId } })
         .then((result) => {
             Logger.info(`Success! ${result}`);
@@ -16,4 +16,4 @@ const getCard = async (userId, callback) => {
         });
 };
 
-export default { getCard };
+export default { getCards };
