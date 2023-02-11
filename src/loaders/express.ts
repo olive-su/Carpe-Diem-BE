@@ -1,13 +1,17 @@
 import express from 'express';
 import cors from 'cors';
-// import { OpticMiddleware } from '@useoptic/express-middleware';
-// import routes from '@/api';
-// import config from '@/config';
+import ApiDocs from '../docs/index';
+
+function getSwaggerOption() {
+    const apiDocs = new ApiDocs();
+    apiDocs.init();
+
+    return apiDocs.getSwaggerOption();
+}
+
+const { swaggerUI, specs, setUpoption } = getSwaggerOption();
+
 export default (app) => {
-    /**
-     * Health Check endpoints
-     * @TODO Explain why they are here
-     */
     app.get('/status', (req, res) => {
         res.status(200).end();
     });
@@ -19,28 +23,12 @@ export default (app) => {
     // It shows the real origin IP in the heroku or Cloudwatch logs
     app.enable('trust proxy');
 
-    // The magic package that prevents frontend developers going nuts
-    // Alternate description:
-    // Enable Cross Origin Resource Sharing to all origins by default
     app.use(cors());
-
-    // Some sauce that always add since 2014
-    // "Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it."
-    // Maybe not needed anymore ?
-    // app.use(require('method-override')());
 
     // Transforms the raw string of req.body into json
     app.use(express.json());
-    // Load API routes
-    // app.use(config.api.prefix, routes());
 
-    // API Documentation
-    // app.use(
-    //     OpticMiddleware({
-    //         enabled: process.env.NODE_ENV !== 'production',
-    //     }),
-    // );
-
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs, setUpoption));
     /// catch 404 and forward to error handler
     app.use((req, res, next) => {
         const err = new Error('Not Found');
