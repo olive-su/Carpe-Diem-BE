@@ -40,4 +40,28 @@ const destroyCard = async (cardId, callback) => {
         });
 };
 
-export default { getCards, getCard, destroyCard };
+const putCard = async (cardDto, callback) => {
+    console.log(cardDto);
+    await Card.update(
+        {
+            cardId: cardDto.card_id,
+            userId: cardDto.user_id,
+            albumId: cardDto.album_id,
+            expressionLabel: cardDto.expression_label,
+            comment: cardDto.comment,
+            thumbnailUrl: cardDto.thumbnail_url,
+            videoUrl: cardDto.video_url,
+        },
+        { where: { cardId: cardDto.card_id } },
+    )
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, 'UPDATE CARD OK');
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getCards, getCard, destroyCard, putCard };
