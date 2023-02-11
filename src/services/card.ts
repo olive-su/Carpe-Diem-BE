@@ -16,4 +16,16 @@ const getCards = async (userId, callback) => {
         });
 };
 
-export default { getCards };
+const getCard = async (cardId, callback) => {
+    await Card.findOne({ where: { card_id: cardId } })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, result);
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getCards, getCard };
