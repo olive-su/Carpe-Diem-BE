@@ -6,10 +6,10 @@ import cardService from '../services/card';
 
 const route = express.Router();
 
-route.get('/', async (req: Request, res: Response) => {
-    const userId = req.get('userId');
+route.get('/:userId', async (req: Request, res: Response) => {
+    const userId = req.params.userId;
 
-    cardService.getCard(userId, (err, data) => {
+    cardService.getCards(userId, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
         else res.status(statusCode.OK).send(data);
     });
