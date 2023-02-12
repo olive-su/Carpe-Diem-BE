@@ -12,7 +12,6 @@ const app = express();
 app.use('/camera', cameraRouter);
 app.use('/card', cardRouter);
 
-
 app.use(cors());
 app.use(express.json());
 

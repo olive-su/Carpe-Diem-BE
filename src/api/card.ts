@@ -6,6 +6,9 @@ import cardService from '../services/card';
 
 const route = express.Router();
 
+route.use(express.json());
+route.use(express.urlencoded({ extended: true }));
+
 route.get('/:userId', async (req: Request, res: Response) => {
     const userId = req.params.userId;
 
@@ -34,11 +37,13 @@ route.delete('/:userId/:cardId', async (req: Request, res: Response) => {
 });
 
 route.put('/:userId/:cardId', async (req: Request, res: Response) => {
-    const cardDto = req.body;
+    let cardDto = req.body;
+    cardDto = { user_id: req.params.userId, card_id: req.params.cardId, ...cardDto };
+    console.log(cardDto);
 
     cardService.putCard(cardDto, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
-        else res.status(statusCode.CREATED).send();
+        else res.status(statusCode.OK).send(data);
     });
 });
 
