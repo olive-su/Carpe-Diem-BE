@@ -3,9 +3,16 @@ import express, { Request, Response } from 'express';
 import statusCode from '../common/constant/statusCode';
 import responseMessage from '../common/constant/responseMessage';
 import cardService from '../services/card';
+import cors from 'cors';
 
 const route = express.Router();
 
+route.use(
+    cors({
+        origin: true,
+        credentials: true,
+    }),
+);
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
