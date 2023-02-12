@@ -41,7 +41,6 @@ const destroyCard = async (cardId, callback) => {
 };
 
 const putCard = async (cardDto, callback) => {
-    console.log(cardDto);
     await Card.update(
         {
             cardId: cardDto.card_id,
