@@ -2,7 +2,7 @@ export default {
     '/card/{userId}': {
         get: {
             tags: ['Card'],
-            summary: '전체 영상',
+            summary: '전체 영상 가져오기',
             description: '전체 영상 (영상 모아보기 페이지)',
             produces: 'application/json',
             parameters: [
