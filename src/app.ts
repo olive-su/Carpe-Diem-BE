@@ -12,7 +12,12 @@ const app = express();
 app.use('/camera', cameraRouter);
 app.use('/card', cardRouter);
 
-app.use(cors());
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+    }),
+);
 app.use(express.json());
 
 const startServer = async () => {

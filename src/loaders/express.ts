@@ -23,7 +23,12 @@ export default (app) => {
     // It shows the real origin IP in the heroku or Cloudwatch logs
     app.enable('trust proxy');
 
-    app.use(cors());
+    app.use(
+        cors({
+            origin: true,
+            credentials: true,
+        }),
+    );
 
     // Transforms the raw string of req.body into json
     app.use(express.json());
