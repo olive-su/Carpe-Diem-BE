@@ -29,7 +29,7 @@ export default (sequelize: any, DataTypes: any): any => {
             },
             userImgUrl: {
                 field: 'user_img_url',
-                type: DataTypes.STRING(100),
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
         },

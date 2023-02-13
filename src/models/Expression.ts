@@ -35,7 +35,7 @@ export default (sequelize: any, DataTypes: any): any => {
             },
             expressionLabel: {
                 field: 'expression_label',
-                type: DataTypes.STRING(10),
+                type: DataTypes.STRING(20),
                 allowNull: false,
             },
             expressionValue: {
@@ -50,7 +50,7 @@ export default (sequelize: any, DataTypes: any): any => {
             },
             videoUrl: {
                 field: 'video_url',
-                type: DataTypes.STRING(100),
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
         },
