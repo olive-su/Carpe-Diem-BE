@@ -28,7 +28,7 @@ const getCard = async (cardId, callback) => {
         });
 };
 
-const destroyCard = async (cardId, callback) => {
+const deleteCard = async (cardId, callback) => {
     await Card.destroy({ where: { card_id: cardId } })
         .then((result) => {
             Logger.info(`Success! ${result}`);
@@ -63,4 +63,4 @@ const putCard = async (cardDto, callback) => {
         });
 };
 
-export default { getCards, getCard, destroyCard, putCard };
+export default { getCards, getCard, deleteCard, putCard };
