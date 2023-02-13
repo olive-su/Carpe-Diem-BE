@@ -16,6 +16,18 @@ const getAlbums = async (userId, callback) => {
         });
 };
 
+const deleteAlbum = async (albumId, callback) => {
+    await Album.destroy({ where: { album_id: albumId } })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, 'DELETE ALBUM OK');
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
 const getAlbum = async (albumId, callback) => {
     await Album.findOne({ where: { album_id: albumId } })
         .then((result) => {
@@ -28,4 +40,4 @@ const getAlbum = async (albumId, callback) => {
         });
 };
 
-export default { getAlbums, getAlbum };
+export default { getAlbums, getAlbum, deleteAlbum };
