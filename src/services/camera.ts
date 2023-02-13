@@ -3,14 +3,15 @@ import Logger from '../loaders/logger';
 import db from '../models';
 
 const Expression = db.expression;
+const Usim = db.usim;
 
 const postCamera = async (expressionDto, callback) => {
     const expressionData = {
-        userId: expressionDto.user_id,
-        expression: expressionDto.expression,
-        accuracy: expressionDto.accuracy,
-        time: expressionDto.time,
-        videoUrl: expressionDto.video_url,
+        userId: expressionDto.userId,
+        expressionLabel: expressionDto.expressionLabel,
+        expressionValue: expressionDto.expressionValue,
+        expressionTime: expressionDto.expressionTime,
+        videoUrl: expressionDto.videoUrl,
     };
     const expression = await Expression.create(expressionData).catch((err) => {
         Logger.error(err);
@@ -19,4 +20,16 @@ const postCamera = async (expressionDto, callback) => {
     Logger.info(`Success! ${expression}`);
 };
 
-export default { postCamera };
+const getUsim = async (userId, callback) => {
+    const usim = await Usim.findAll({ where: { user_id: userId } })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, result);
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { postCamera, getUsim };
