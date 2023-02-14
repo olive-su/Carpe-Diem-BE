@@ -40,4 +40,25 @@ const getAlbum = async (albumId, callback) => {
         });
 };
 
-export default { getAlbums, getAlbum, deleteAlbum };
+const putAlbum = async (albumDto, callback) => {
+    await Album.update(
+        {
+            userId: albumDto.user_id,
+            cardId: albumDto.card_id,
+            albumId: albumDto.album_id,
+            title: albumDto.title,
+            coverImgUrl: albumDto.thumbnail_url,
+        },
+        { where: { albumId: albumDto.album_id } },
+    )
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, 'UPDATE ALBUM OK');
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getAlbums, getAlbum, deleteAlbum, putAlbum };
