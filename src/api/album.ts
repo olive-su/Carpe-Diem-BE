@@ -18,4 +18,22 @@ route.get('/:userId', async (req: Request, res: Response) => {
     });
 });
 
+route.get('/:userId/:albumId', async (req: Request, res: Response) => {
+    const albumId = req.params.albumId;
+
+    albumService.getAlbum(albumId, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
+route.delete('/:userId/:albumId', async (req: Request, res: Response) => {
+    const albumId = req.params.albumId;
+
+    albumService.deleteAlbum(albumId, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
 export default route;
