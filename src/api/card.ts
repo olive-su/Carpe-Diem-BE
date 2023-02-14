@@ -44,7 +44,7 @@ route.delete('/:userId/:cardId', async (req: Request, res: Response) => {
 });
 
 route.put('/:userId/:cardId', async (req: Request, res: Response) => {
-    let cardDto = req.body;
+    let cardDto = req.body.data;
     cardDto = { user_id: req.params.userId, card_id: req.params.cardId, ...cardDto };
     console.log(cardDto);
 
