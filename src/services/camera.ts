@@ -14,6 +14,7 @@ const postCamera = async (expressionDto, callback) => {
         expressionValue: expressionDto.expressionValue,
         expressionTime: expressionDto.expressionTime,
         videoUrl: expressionDto.videoUrl,
+        thumbnailUrl: expressionDto.thumbnailUrl,
     };
     const expression = await Expression.create(expressionData).catch((err) => {
         Logger.error(err);

@@ -24,8 +24,12 @@ route.post('/:userId', upload.single('file'), async (req, res) => {
     if (req.file == null) {
         return res.status(statusCode.BAD_REQUEST).json({ message: responseMessage.camera.upload_error });
     }
-    expressionDto['videoUrl'] = req.file['key'];
+    const videoUrl: string = req.file['key'];
+    const thumbnailUrl: string = 'card-thumbnail' + req.file['key'].split('.')[0].replace('album-video', '') + '.jpg';
+
+    expressionDto['videoUrl'] = videoUrl;
     expressionDto['userId'] = req.params.userId;
+    expressionDto['thumbnailUrl'] = thumbnailUrl;
 
     cameraService.postCamera(expressionDto, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.camera.expression_error });
