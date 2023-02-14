@@ -185,7 +185,7 @@ export default {
             ],
             responses: {
                 200: {
-                    description: '사용자 단일 영상 로드 완료',
+                    description: '사용자 단일 영상 삭제 완료',
                     content: {
                         'application/json': {
                             schema: {
@@ -254,7 +254,7 @@ export default {
             },
             responses: {
                 200: {
-                    description: '사용자 단일 영상 로드 완료',
+                    description: '사용자 단일 영상 수정 완료',
                     content: {
                         'application/json': {
                             schema: {
