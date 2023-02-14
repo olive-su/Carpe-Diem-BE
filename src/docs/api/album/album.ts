@@ -69,5 +69,33 @@ export default {
                 },
             },
         },
+        delete: {
+            tags: ['Album'],
+            summary: '단일 앨범 삭제',
+            description: '단일 앨범 삭제 (단일 앨범만 삭제, Card list는 삭제 안됨)',
+            produces: 'application/json',
+            parameters: [
+                {
+                    name: 'albumId',
+                    in: 'path',
+                    description: '앨범 아이디',
+                    required: true,
+                },
+            ],
+            responses: {
+                200: {
+                    description: '사용자 단일 앨범 삭제 완료',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'string',
+                                example: 'DELETE CARD OK',
+                                properties: 'DELETE CARD OK',
+                            },
+                        },
+                    },
+                },
+            },
+        },
     },
 };
