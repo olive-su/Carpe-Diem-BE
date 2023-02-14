@@ -4,8 +4,16 @@ import statusCode from '../common/constant/statusCode';
 import responseMessage from '../common/constant/responseMessage';
 import albumService from '../services/album';
 
+import cors from 'cors';
+
 const route = express.Router();
 
+route.use(
+    cors({
+        origin: true,
+        credentials: true,
+    }),
+);
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
@@ -32,6 +40,17 @@ route.delete('/:userId/:albumId', async (req: Request, res: Response) => {
 
     albumService.deleteAlbum(albumId, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
+route.put('/:userId/:albumId', async (req: Request, res: Response) => {
+    let albumDto = req.body;
+    albumDto = { user_id: req.params.userId, album_id: req.params.albumId, ...albumDto };
+    console.log(albumDto);
+
+    albumService.putAlbum(albumDto, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
         else res.status(statusCode.OK).send(data);
     });
 });

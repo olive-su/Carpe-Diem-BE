@@ -43,6 +43,17 @@ route.delete('/:userId/:cardId', async (req: Request, res: Response) => {
     });
 });
 
+// route.put('/:userId/:cardId', async (req: Request, res: Response) => {
+//     let cardDto = req.body;
+//     cardDto = { user_id: req.params.userId, card_id: req.params.cardId, ...cardDto };
+//     console.log(cardDto);
+
+//     cardService.putCard(cardDto, (err, data) => {
+//         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
+//         else res.status(statusCode.OK).send(data);
+//     });
+// });
+
 route.put('/:userId/:cardId', async (req: Request, res: Response) => {
     let cardDto = req.body;
     cardDto = { user_id: req.params.userId, card_id: req.params.cardId, ...cardDto };
