@@ -33,6 +33,13 @@ route.post('/:userId', upload.single('file'), async (req, res) => {
     });
 });
 
+route.get('/:userId', (req, res) => {
+    cameraService.getVideo(req.params.userId, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.camera.video_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
 route.get('/usim/:userId', (req, res) => {
     cameraService.getUsim(req.params.userId, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.camera.usim_error });

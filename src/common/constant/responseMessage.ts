@@ -1,6 +1,7 @@
 export default {
     camera: {
         upload_error: '파일이 존재하지 않습니다.',
+        video_error: '영상을 불러올 수 없습니다.',
         expression_error: '사용자 감정 데이터가 유효하지 않습니다.',
         usim_error: '유저 이미지를 불러오지 못했습니다.',
     },
