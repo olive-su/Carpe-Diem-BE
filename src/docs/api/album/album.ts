@@ -21,7 +21,7 @@ export default {
             ],
             responses: {
                 200: {
-                    description: '단일 앨범 로드 완료',
+                    description: '사용자 단일 앨범 로드 완료',
                     content: {
                         'application/json': {
                             schema: {
@@ -82,7 +82,7 @@ export default {
             produces: 'application/json',
             parameters: [
                 {
-                    name: 'userID',
+                    name: 'userId',
                     in: 'path',
                     description: '사용자 아이디',
                     required: true,
@@ -156,7 +156,7 @@ export default {
             },
             responses: {
                 200: {
-                    description: '단일 앨범 타이틀 수정 완료',
+                    description: '사용자 단일 앨범 타이틀 수정 완료',
                     content: {
                         'application/json': {
                             schema: {
