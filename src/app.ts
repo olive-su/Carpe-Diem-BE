@@ -6,13 +6,20 @@ import config from './config';
 
 import cameraRouter from './api/camera';
 import cardRouter from './api/card';
+import albumRouter from './api/album';
 
 const app = express();
 
 app.use('/camera', cameraRouter);
 app.use('/card', cardRouter);
+app.use('/album', albumRouter);
 
-app.use(cors());
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+    }),
+);
 app.use(express.json());
 
 const startServer = async () => {

@@ -2,10 +2,10 @@
 import Logger from '../loaders/logger';
 import db from '../models';
 
-const Card = db.card;
+const Album = db.album;
 
-const getCards = async (userId, callback) => {
-    await Card.findAll({ where: { user_id: userId } })
+const getAlbums = async (userId, callback) => {
+    await Album.findAll({ where: { user_id: userId } })
         .then((result) => {
             Logger.info(`Success! ${result}`);
             callback(null, result);
@@ -16,8 +16,20 @@ const getCards = async (userId, callback) => {
         });
 };
 
-const getCard = async (cardId, callback) => {
-    await Card.findOne({ where: { card_id: cardId } })
+const deleteAlbum = async (albumId, callback) => {
+    await Album.destroy({ where: { album_id: albumId } })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, 'DELETE ALBUM OK');
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+const getAlbum = async (albumId, callback) => {
+    await Album.findOne({ where: { album_id: albumId } })
         .then((result) => {
             Logger.info(`Success! ${result}`);
             callback(null, result);
@@ -28,34 +40,20 @@ const getCard = async (cardId, callback) => {
         });
 };
 
-const deleteCard = async (cardId, callback) => {
-    await Card.destroy({ where: { card_id: cardId } })
-        .then((result) => {
-            Logger.info(`Success! ${result}`);
-            callback(null, 'DELETE CARD OK');
-        })
-        .catch((err) => {
-            Logger.error(err);
-            return callback(err);
-        });
-};
-
-const putCard = async (cardDto, callback) => {
-    await Card.update(
+const putAlbum = async (albumDto, callback) => {
+    await Album.update(
         {
-            cardId: cardDto.card_id,
-            userId: cardDto.user_id,
-            albumId: cardDto.album_id,
-            expressionLabel: cardDto.expression_label,
-            comment: cardDto.comment,
-            thumbnailUrl: cardDto.thumbnail_url,
-            videoUrl: cardDto.video_url,
+            userId: albumDto.user_id,
+            cardId: albumDto.card_id,
+            albumId: albumDto.album_id,
+            title: albumDto.title,
+            coverImgUrl: albumDto.thumbnail_url,
         },
-        { where: { cardId: cardDto.card_id } },
+        { where: { albumId: albumDto.album_id } },
     )
         .then((result) => {
             Logger.info(`Success! ${result}`);
-            callback(null, 'UPDATE CARD OK');
+            callback(null, 'UPDATE ALBUM OK');
         })
         .catch((err) => {
             Logger.error(err);
@@ -63,4 +61,4 @@ const putCard = async (cardDto, callback) => {
         });
 };
 
-export default { getCards, getCard, deleteCard, putCard };
+export default { getAlbums, getAlbum, deleteAlbum, putAlbum };

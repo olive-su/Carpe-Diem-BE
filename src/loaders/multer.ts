@@ -15,12 +15,7 @@ const s3 = new S3Client({
 });
 
 const dateFormat = (now): string => {
-    return now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
-};
-
-const timeFormat = (nowTime): string => {
-    const rst = nowTime.split('%3A');
-    return rst.join(':');
+    return now.getFullYear() + '_' + now.getMonth() + '_' + now.getDate();
 };
 
 const upload = multer({
@@ -30,7 +25,7 @@ const upload = multer({
         key: function (req, file, cb) {
             const format = file.originalname.split('.').slice(-1)[0];
             const now = new Date();
-            const userId = req['body'].user_id;
+            const userId = req['params'].userId;
 
             // 파일 포맷 유효성 검사
             if (!['webm', 'mp4'].includes(format)) {
@@ -39,7 +34,7 @@ const upload = multer({
             }
 
             Logger.info(`File uploaded successfully.`);
-            cb(null, `album-video/${req['query'].userId}/${dateFormat(now)}/${timeFormat(file.originalname)}`);
+            cb(null, `album-video/${userId}/${dateFormat(now)}/${file.originalname}`);
         },
     }),
     limits: { fileSize: 5 * 1024 * 1024 },

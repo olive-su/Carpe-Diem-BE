@@ -6,6 +6,7 @@ interface ExpressionAttributes {
     expressionLabel: string;
     expressionValue: number;
     expressionTime: Date;
+    thumbnailUrl: string;
     videoUrl: string;
     // other attributes...
 }
@@ -16,6 +17,7 @@ export default (sequelize: any, DataTypes: any): any => {
         expressionLabel!: string;
         expressionValue!: number;
         expressionTime!: Date;
+        thumbnailUrl!: string;
         videoUrl!: string;
         // static associate(models: any) {}
     }
@@ -35,7 +37,7 @@ export default (sequelize: any, DataTypes: any): any => {
             },
             expressionLabel: {
                 field: 'expression_label',
-                type: DataTypes.STRING(10),
+                type: DataTypes.STRING(20),
                 allowNull: false,
             },
             expressionValue: {
@@ -48,9 +50,14 @@ export default (sequelize: any, DataTypes: any): any => {
                 type: DataTypes.DATE,
                 allowNull: false,
             },
+            thumbnailUrl: {
+                field: 'thumbnail_url',
+                type: DataTypes.TEXT,
+                allowNull: false,
+            },
             videoUrl: {
                 field: 'video_url',
-                type: DataTypes.STRING(100),
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
         },

@@ -1,9 +1,9 @@
 const swaggerOpenApiVersion = '3.0.0';
 
 const swaggerInfo = {
-    title: 'Swagger-Hanlder',
+    title: 'Carpe Diem Swagger',
     version: '0.0.1',
-    description: '',
+    description: '크래프톤 정글 1기 나만의 무기 TEAM Carpe Diem API',
 };
 
 const swaggerTags = [

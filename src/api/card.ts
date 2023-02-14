@@ -3,9 +3,16 @@ import express, { Request, Response } from 'express';
 import statusCode from '../common/constant/statusCode';
 import responseMessage from '../common/constant/responseMessage';
 import cardService from '../services/card';
+import cors from 'cors';
 
 const route = express.Router();
 
+route.use(
+    cors({
+        origin: true,
+        credentials: true,
+    }),
+);
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
@@ -30,7 +37,7 @@ route.get('/:userId/:cardId', async (req: Request, res: Response) => {
 route.delete('/:userId/:cardId', async (req: Request, res: Response) => {
     const cardId = req.params.cardId;
 
-    cardService.destroyCard(cardId, (err, data) => {
+    cardService.deleteCard(cardId, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
         else res.status(statusCode.OK).send(data);
     });
