@@ -24,22 +24,22 @@ export default {
                                     result: {
                                         type: 'object',
                                         properties: {
-                                            cardId: {
+                                            card_id: {
                                                 type: 'number',
                                                 description: '카드 아이디',
                                                 example: 1,
                                             },
-                                            userId: {
+                                            user_id: {
                                                 type: 'string',
                                                 description: '유저 아이디',
                                                 example: 'test1234',
                                             },
-                                            albumId: {
+                                            album_id: {
                                                 type: 'number',
                                                 description: '해당 카드가 들어있는 앨범 아이디',
                                                 example: 1,
                                             },
-                                            expressionLabel: {
+                                            expression_label: {
                                                 type: 'string',
                                                 description: '표정 라벨 데이터',
                                                 example: 'happy',
@@ -49,22 +49,22 @@ export default {
                                                 description: '해당 영상에 남긴 코멘트',
                                                 example: '즐거웠던 하루를 기록하다.',
                                             },
-                                            thumbnailUrl: {
+                                            thumbnail_url: {
                                                 type: 'string',
                                                 description: '썸네일 이미지 S3 URL',
                                                 example: 'https://s3.amazonaws.com/test.jpg',
                                             },
-                                            videoUrl: {
+                                            video_url: {
                                                 type: 'string',
                                                 description: '비디오 S3 URL',
                                                 example: 'https://s3.amazonaws.com/test.mp4',
                                             },
-                                            createdAt: {
+                                            created_at: {
                                                 type: 'datetime',
                                                 description: '영상 생성 날짜',
                                                 example: '2022-02-08T00:00:00.000Z',
                                             },
-                                            updatedAt: {
+                                            updated_at: {
                                                 type: 'datetime',
                                                 description: '영상 수정 날짜',
                                                 example: '2022-02-08T00:00:00.000Z',
@@ -110,22 +110,22 @@ export default {
                                     result: {
                                         type: 'object',
                                         properties: {
-                                            cardId: {
+                                            card_id: {
                                                 type: 'number',
                                                 description: '카드 아이디',
                                                 example: 1,
                                             },
-                                            userId: {
+                                            user_id: {
                                                 type: 'string',
                                                 description: '유저 아이디',
                                                 example: 'test1234',
                                             },
-                                            albumId: {
+                                            album_id: {
                                                 type: 'number',
                                                 description: '해당 카드가 들어있는 앨범 아이디',
                                                 example: 1,
                                             },
-                                            expressionLabel: {
+                                            expression_label: {
                                                 type: 'string',
                                                 description: '표정 라벨 데이터',
                                                 example: 'happy',
@@ -135,22 +135,22 @@ export default {
                                                 description: '해당 영상에 남긴 코멘트',
                                                 example: '즐거웠던 하루를 기록하다.',
                                             },
-                                            thumbnailUrl: {
+                                            thumbnail_url: {
                                                 type: 'string',
                                                 description: '썸네일 이미지 S3 URL',
                                                 example: 'https://s3.amazonaws.com/test.jpg',
                                             },
-                                            videoUrl: {
+                                            video_url: {
                                                 type: 'string',
                                                 description: '비디오 S3 URL',
                                                 example: 'https://s3.amazonaws.com/test.mp4',
                                             },
-                                            createdAt: {
+                                            created_at: {
                                                 type: 'datetime',
                                                 description: '영상 생성 날짜',
                                                 example: '2022-02-08T00:00:00.000Z',
                                             },
-                                            updatedAt: {
+                                            updated_at: {
                                                 type: 'datetime',
                                                 description: '영상 수정 날짜',
                                                 example: '2022-02-08T00:00:00.000Z',
@@ -229,17 +229,17 @@ export default {
                                 },
                                 expression_label: {
                                     type: 'string',
-                                    description: '표정',
+                                    description: '녹화 영상 최대 감정 표정',
                                     example: 'happy',
                                 },
                                 comment: {
                                     type: 'string',
-                                    description: '코멘트',
+                                    description: '녹화 영상 코멘트',
                                     example: '즐겁다 즐거워',
                                 },
                                 thumbnail_url: {
                                     type: 'string',
-                                    description: '썸네일 URL',
+                                    description: '녹화 영상 썸네일 URL',
                                     example: 'https://s3.amazonaws.com/test.jpg',
                                 },
                                 video_url: {
