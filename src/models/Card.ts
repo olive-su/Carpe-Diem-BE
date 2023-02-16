@@ -38,7 +38,6 @@ export default (sequelize: any, DataTypes: any): any => {
             albumId: {
                 field: 'album_id',
                 type: DataTypes.INTEGER,
-                allowNull: false,
             },
             expressionLabel: {
                 field: 'expression_label',
