@@ -45,7 +45,7 @@ const getVideo = async (userId, callback) => {
 };
 
 const getUsim = async (userId, callback) => {
-    const usim = await Usim.findAll({ where: { user_id: userId } })
+    await Usim.findAll({ where: { user_id: userId } })
         .then((result) => {
             Logger.info(`Success! ${result}`);
             callback(null, result);
