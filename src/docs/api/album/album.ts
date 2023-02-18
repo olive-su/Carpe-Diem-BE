@@ -27,46 +27,96 @@ export default {
                             schema: {
                                 type: 'object',
                                 properties: {
-                                    result: {
-                                        type: 'object',
-                                        properties: {
-                                            album_id: {
-                                                type: 'number',
-                                                description: '앨범 아이디',
-                                                example: 1,
+                                    album_id: {
+                                        type: 'number',
+                                        description: '앨범 아이디',
+                                        example: 1,
+                                    },
+                                    user_id: {
+                                        type: 'string',
+                                        description: '유저 아이디',
+                                        example: 'test1234',
+                                    },
+                                    cover_img_url: {
+                                        type: 'string',
+                                        description: '해당 앨범이 들어있는 S3 파일 경로(.jpg)',
+                                        example: 'card-thumbnail/test/2023_02_14/14_41_35.jpg',
+                                    },
+                                    title: {
+                                        type: 'string',
+                                        description: '해당 앨범 제목',
+                                        example: '취업에 합격해서 기뻤던 한 주',
+                                    },
+                                    card_id: {
+                                        type: 'json',
+                                        description: '해당 앨범에 들어있는 카드 아이디',
+                                        example: [
+                                            {
+                                                cardId: 501,
+                                                userId: 'test',
+                                                albumId: null,
+                                                expressionLabel: 'happy',
+                                                comment: '영상 설명을 입력해주세요.',
+                                                thumbnailUrl: 'card-thumbnail/test/2023_1_15/21_48_30.jpg',
+                                                videoUrl: 'album-video/test/2023_1_15/21_48_30.mp4',
+                                                createdAt: '2023-02-15T04:48:44.000Z',
+                                                updatedAt: '2023-02-15T12:48:44.000Z',
                                             },
-                                            user_id: {
-                                                type: 'string',
-                                                description: '유저 아이디',
-                                                example: 'test1234',
+                                            {
+                                                cardId: 502,
+                                                userId: 'test',
+                                                albumId: null,
+                                                expressionLabel: 'happy',
+                                                comment: '영상 설명을 입력해주세요.',
+                                                thumbnailUrl: 'card-thumbnail/test/2023_1_15/21_48_43.jpg',
+                                                videoUrl: 'album-video/test/2023_1_15/21_48_43.mp4',
+                                                createdAt: '2023-02-15T04:48:59.000Z',
+                                                updatedAt: '2023-02-15T12:48:59.000Z',
                                             },
-                                            cover_img_url: {
-                                                type: 'string',
-                                                description: '해당 앨범이 들어있는 S3 파일 경로(.jpg)',
-                                                example: 'card-thumbnail/test/2023_02_14/14_41_35.jpg',
+                                            {
+                                                cardId: 503,
+                                                userId: 'test',
+                                                albumId: null,
+                                                expressionLabel: 'happy',
+                                                comment: '영상 설명을 입력해주세요.',
+                                                thumbnailUrl: 'card-thumbnail/test/2023_1_15/21_49_03.jpg',
+                                                videoUrl: 'album-video/test/2023_1_15/21_49_03.mp4',
+                                                createdAt: '2023-02-15T04:49:19.000Z',
+                                                updatedAt: '2023-02-15T12:49:19.000Z',
                                             },
-                                            title: {
-                                                type: 'string',
-                                                description: '해당 앨범 제목',
-                                                example: '취업에 합격해서 기뻤던 한 주',
+                                            {
+                                                cardId: 504,
+                                                userId: 'test',
+                                                albumId: null,
+                                                expressionLabel: 'happy',
+                                                comment: '영상 설명을 입력해주세요.',
+                                                thumbnailUrl: 'card-thumbnail/test/2023_1_15/21_49_19.jpg',
+                                                videoUrl: 'album-video/test/2023_1_15/21_49_19.mp4',
+                                                createdAt: '2023-02-15T12:49:34.000Z',
+                                                updatedAt: '2023-02-15T12:49:34.000Z',
                                             },
-                                            card_id: {
-                                                type: 'json',
-                                                description: '해당 앨범에 들어있는 카드 아이디',
-                                                example:
-                                                    '{"card1": 1, "card2": 2, "card3": 3, "card4": 4, "card5": 5, "card6": 6, "card7": 7, "card8": 8, "card9": 9, "card10": 10}',
+                                            {
+                                                cardId: 506,
+                                                userId: 'test',
+                                                albumId: null,
+                                                expressionLabel: 'surprised',
+                                                comment: '영상 설명을 입력해주세요.',
+                                                thumbnailUrl: 'card-thumbnail/test/2023_1_15/21_50_03.jpg',
+                                                videoUrl: 'album-video/test/2023_1_15/21_50_03.mp4',
+                                                createdAt: '2023-02-16T04:50:17.000Z',
+                                                updatedAt: '2023-02-15T12:50:17.000Z',
                                             },
-                                            created_at: {
-                                                type: 'datetime',
-                                                description: '영상 생성 날짜',
-                                                example: '2022-02-08T00:00:00.000Z',
-                                            },
-                                            updated_at: {
-                                                type: 'datetime',
-                                                description: '영상 수정 날짜',
-                                                example: '2022-02-08T00:00:00.000Z',
-                                            },
-                                        },
+                                        ],
+                                    },
+                                    created_at: {
+                                        type: 'datetime',
+                                        description: '영상 생성 날짜',
+                                        example: '2022-02-08T00:00:00.000Z',
+                                    },
+                                    updated_at: {
+                                        type: 'datetime',
+                                        description: '영상 수정 날짜',
+                                        example: '2022-02-08T00:00:00.000Z',
                                     },
                                 },
                             },
