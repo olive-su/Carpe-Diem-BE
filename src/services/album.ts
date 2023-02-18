@@ -1,8 +1,9 @@
-// import ExpressionModel from '../models';
+import { Sequelize } from 'sequelize';
 import Logger from '../loaders/logger';
 import db from '../models';
 
 const Album = db.album;
+const Card = db.card;
 
 const getAlbums = async (userId, callback) => {
     await Album.findAll({ where: { user_id: userId } })
@@ -16,11 +17,11 @@ const getAlbums = async (userId, callback) => {
         });
 };
 
-const deleteAlbum = async (albumId, callback) => {
-    await Album.destroy({ where: { album_id: albumId } })
+const getAlbum = (albumId, callback) => {
+    Album.findOne({ where: { album_id: albumId } })
         .then((result) => {
             Logger.info(`Success! ${result}`);
-            callback(null, 'DELETE ALBUM OK');
+            return callback(null, result);
         })
         .catch((err) => {
             Logger.error(err);
@@ -28,8 +29,12 @@ const deleteAlbum = async (albumId, callback) => {
         });
 };
 
-const getAlbum = async (albumId, callback) => {
-    await Album.findOne({ where: { album_id: albumId } })
+const getAlbumCard = async (cardId, callback) => {
+    const cardIdMatchArray = cardId.map((cardId) => {
+        return `card_id = ${cardId}`;
+    });
+
+    await Card.findAll({ where: Sequelize.literal(cardIdMatchArray.join(' OR ')) })
         .then((result) => {
             Logger.info(`Success! ${result}`);
             callback(null, result);
@@ -61,4 +66,16 @@ const putAlbum = async (albumDto, callback) => {
         });
 };
 
-export default { getAlbums, getAlbum, deleteAlbum, putAlbum };
+const deleteAlbum = async (albumId, callback) => {
+    await Album.destroy({ where: { album_id: albumId } })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, 'DELETE ALBUM OK');
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getAlbums, getAlbum, getAlbumCard, putAlbum, deleteAlbum };
