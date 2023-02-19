@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
@@ -14,6 +15,9 @@ import cameraRouter from './api/camera';
 import cardRouter from './api/card';
 import albumRouter from './api/album';
 
+import db from './models';
+const GoogleStrategy = require('passport-google-oauth2').OAuth2Strategy;
+const User = db.user;
 const app = express();
 
 /* Passport */
