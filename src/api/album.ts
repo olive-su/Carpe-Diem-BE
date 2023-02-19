@@ -44,6 +44,16 @@ route.get('/:userId/:albumId', async (req: Request, res: Response) => {
     });
 });
 
+route.post('/:userId', async (req: Request, res: Response) => {
+    const albumDto = req.body;
+    albumDto.user_id = req.params.userId;
+
+    albumService.postAlbum(albumDto, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.create_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
 route.put('/:userId/:albumId', async (req: Request, res: Response) => {
     let albumDto = req.body;
     albumDto = { user_id: req.params.userId, album_id: req.params.albumId, ...albumDto };

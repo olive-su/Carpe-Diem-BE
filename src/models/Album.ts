@@ -34,7 +34,6 @@ export default (sequelize: any, DataTypes: any): any => {
             coverImgUrl: {
                 field: 'cover_img_url',
                 type: DataTypes.STRING(100),
-                allowNull: false,
             },
             title: {
                 field: 'title',

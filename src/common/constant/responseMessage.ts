@@ -11,5 +11,6 @@ export default {
     },
     album: {
         server_error: '요청한 앨범 데이터를 처리하지 못했습니다.',
+        create_error: '새 앨범을 생성하지 못했습니다.',
     },
 };
