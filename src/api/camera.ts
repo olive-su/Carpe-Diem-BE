@@ -33,7 +33,7 @@ route.post('/:userId', upload.single('file'), async (req, res) => {
 
     cameraService.postCamera(expressionDto, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.camera.expression_error });
-        else res.status(statusCode.CREATED).send();
+        else res.status(statusCode.OK).send(data);
     });
 });
 

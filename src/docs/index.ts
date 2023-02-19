@@ -1,8 +1,9 @@
 import swaggerUI from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import Swagger from '../loaders/swagger';
-import card from './api/card';
 import album from './api/album';
+import auth from './api/auth';
+import card from './api/card';
 
 export default class ApiDocs {
     #apiDocOption;
@@ -10,6 +11,7 @@ export default class ApiDocs {
 
     constructor() {
         this.#apiDocOption = {
+            ...auth,
             ...card,
             ...album,
         };
