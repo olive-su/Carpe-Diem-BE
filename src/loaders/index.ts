@@ -8,7 +8,7 @@ export default async (expressApp) => {
     });
 
     Logger.info('✌️ DB loaded and connected!');
-    
+
     await expressLoader(expressApp);
     Logger.info('✌️ Express loaded!');
 };
