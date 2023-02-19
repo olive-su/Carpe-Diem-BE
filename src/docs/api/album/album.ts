@@ -186,8 +186,7 @@ export default {
                                 card_id: {
                                     type: 'json',
                                     description: '해당 앨범에 들어있는 카드 아이디',
-                                    example:
-                                        '{"card1": 1, "card2": 2, "card3": 3, "card4": 4, "card5": 5, "card6": 6, "card7": 7, "card8": 8, "card9": 9, "card10": 10}',
+                                    example: '["501", "502", "503", "504", "505", "506", "507"]',
                                 },
                                 title: {
                                     type: 'string',
@@ -213,6 +212,56 @@ export default {
                                 type: 'string',
                                 example: 'UPDATE ALBUM OK',
                                 properties: 'UPDATE ALBUM OK',
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+    '/album/{userId}': {
+        post: {
+            tags: ['Album'],
+            summary: '단일 앨범 생성',
+            description: '사용자가 선택한 카드들을 모아서 새 앨범을 만듭니다.',
+            produces: 'application/json',
+            parameters: [
+                {
+                    name: 'userId',
+                    in: 'path',
+                    description: '사용자 아이디',
+                    required: true,
+                },
+            ],
+            requestBody: {
+                content: {
+                    'application/json': {
+                        schema: {
+                            properties: {
+                                title: {
+                                    type: 'string',
+                                    description: '타이틀',
+                                    example: 'LJY의 즐거운 날',
+                                },
+                                card_id: {
+                                    type: 'json',
+                                    description: '해당 앨범에 들어있는 카드 아이디',
+                                    example: '["501", "502", "503", "504", "505", "506", "507"]',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            responses: {
+                200: {
+                    description: '사용자 커스텀 앨범 생성 완료',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'string',
+                                example: 'CREATE ALBUM OK',
+                                properties: 'CREATE ALBUM OK',
                             },
                         },
                     },

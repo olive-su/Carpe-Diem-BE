@@ -45,6 +45,22 @@ const getAlbumCard = async (cardId, callback) => {
         });
 };
 
+const postAlbum = (albumDto, callback) => {
+    Album.create({
+        userId: albumDto.user_id,
+        title: albumDto.title,
+        cardId: albumDto.card_id,
+    })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, 'CREATE ALBUM OK');
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
 const putAlbum = async (albumDto, callback) => {
     await Album.update(
         {
@@ -78,4 +94,4 @@ const deleteAlbum = async (albumId, callback) => {
         });
 };
 
-export default { getAlbums, getAlbum, getAlbumCard, putAlbum, deleteAlbum };
+export default { getAlbums, getAlbum, getAlbumCard, postAlbum, putAlbum, deleteAlbum };
