@@ -3,6 +3,7 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import Swagger from '../loaders/swagger';
 import card from './api/card';
 import album from './api/album';
+import user from './api/user';
 
 export default class ApiDocs {
     #apiDocOption;
@@ -12,6 +13,7 @@ export default class ApiDocs {
         this.#apiDocOption = {
             ...card,
             ...album,
+            ...user,
         };
 
         this.#swagger = new Swagger();
