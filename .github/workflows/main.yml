@@ -8,7 +8,6 @@ on:
 env:
   DOCKER_IMAGE: ghcr.io/${{ github.actor }}/backend
   VERSION: ${{ github.sha }}
-  NAME: CICD
 
 jobs:
   build:
@@ -57,6 +56,6 @@ jobs:
       # 3000 -> 80 포트로 수행하도록 지정
       - name: Docker run
         run: |
-          docker stop ${{ env.NAME }} && docker rm ${{ env.NAME }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest
-          docker run -d -p 4000:4000 --name backend --restart always ${{ env.DOCKER_IMAGE }}:latest
+          docker stop ${{ env.DOCKER_IMAGE }} && docker rm ${{ env.DOCKER_IMAGE }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest
+          docker run -d -p 4000:4000 --name {{ env.DOCKER_IMAGE }} --restart always ${{ env.DOCKER_IMAGE }}:latest
     
