@@ -1,18 +1,11 @@
 import express, { Request, Response } from 'express';
 
+import expressRequest from '../types/expressRequest';
 import config from '../config';
 import statusCode from '../common/constant/statusCode';
 import responseMessage from '../common/constant/responseMessage';
 
 const route = express.Router();
-
-declare module 'express' {
-    export interface Request {
-        isAuthenticated: any;
-        logout: any;
-        user: any;
-    }
-}
 
 export default (passport) => {
     route.get('/', (req: Request, res: Response) => {

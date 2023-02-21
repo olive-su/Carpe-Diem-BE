@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import express from 'express';
 import cors from 'cors';
+import flash from 'connect-flash';
 import session from 'express-session';
 import mysqlSession from 'express-mysql-session';
 import Logger from './loaders/logger';
@@ -15,9 +16,6 @@ import cameraRouter from './api/camera';
 import cardRouter from './api/card';
 import albumRouter from './api/album';
 
-import db from './models';
-const GoogleStrategy = require('passport-google-oauth2').OAuth2Strategy;
-const User = db.user;
 const app = express();
 
 /* Passport */
@@ -30,10 +28,19 @@ const sessionDatabase: PassportDB = {
 };
 const MySqlStore = mysqlSession(session);
 
+app.use(express.json());
+app.use(flash());
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+    }),
+);
+
 app.use(
     session({
-        key: 'session_key',
-        secret: 'session_secret',
+        key: 'session_cookie_name',
+        secret: 'session_cookie_secret',
         store: new MySqlStore(sessionDatabase),
         resave: false,
         saveUninitialized: true,
@@ -45,14 +52,6 @@ app.use(
 );
 
 const passport = Passport(app);
-
-app.use(express.json());
-app.use(
-    cors({
-        origin: true,
-        credentials: true,
-    }),
-);
 
 /* Router */
 app.use('/auth', authRouter(passport));

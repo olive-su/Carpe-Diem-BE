@@ -4,6 +4,18 @@ import db from '../models';
 
 const User = db.user;
 
+const validateUser = (userId, callback) => {
+    User.findOne({ where: { userId: userId } })
+        .then((result) => {
+            Logger.info(`사용자 조회가 정상적으로 처리되었습니다. ${result}`);
+            callback(null, result);
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
 const signUp = (userDto, callback) => {
     User.create({
         userId: userDto.user_id,
@@ -20,4 +32,4 @@ const signUp = (userDto, callback) => {
         });
 };
 
-export default { signUp };
+export default { validateUser, signUp };

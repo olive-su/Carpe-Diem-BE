@@ -1,9 +1,9 @@
 export default {
-    '/card/{userId}': {
+    '/camera': {
         get: {
-            tags: ['Card'],
-            summary: '전체 영상 가져오기',
-            description: '전체 영상 (영상 모아보기 페이지)',
+            tags: ['Camera'],
+            summary: '새 카드 생성',
+            description: '실시간 카메라로 인해 자동으로 감지되고 새로운 영상이 저장됩니다.',
             produces: 'application/json',
             parameters: [
                 {
