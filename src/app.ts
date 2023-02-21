@@ -7,12 +7,14 @@ import config from './config';
 import cameraRouter from './api/camera';
 import cardRouter from './api/card';
 import albumRouter from './api/album';
+import userRouter from './api/user';
 
 const app = express();
 
 app.use('/camera', cameraRouter);
 app.use('/card', cardRouter);
 app.use('/album', albumRouter);
+app.use('/user', userRouter);
 
 app.use(
     cors({
