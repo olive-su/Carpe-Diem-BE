@@ -49,11 +49,11 @@ jobs:
     steps:
       - name: Generate Environment Variables File for Production
         run: |
-          echo "DB_HOST=$DB_HOST" >> .env
-          echo "DB_PORT=$DB_PORT" >> .env
-          echo "DB_USERNAME=$DB_USERNAME" >> .env
-          echo "DB_PASSWORD=$DB_PASSWORD" >> .env
-          echo "DB_DATABASE=$DB_DATABASE" >> .env
+          echo "DB_HOST=$DB_HOST" >> ./.env
+          echo "DB_PORT=$DB_PORT" >> ./.env
+          echo "DB_USERNAME=$DB_USERNAME" >> ./.env
+          echo "DB_PASSWORD=$DB_PASSWORD" >> ./.env
+          echo "DB_DATABASE=$DB_DATABASE" >> ./.env
           echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> .env
           echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> .env
           echo "AWS_BUCKET_NAME=$AWS_BUCKET_NAME" >> .env
@@ -74,7 +74,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
-      # 3000 -> 80 포트로 수행하도록 지정
       - name: Docker run
         run: |
           docker stop backend && docker rm backend && docker rmi ${{ env.DOCKER_IMAGE }}:latest
