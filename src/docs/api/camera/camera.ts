@@ -2,98 +2,9 @@ export default {
     '/camera': {
         get: {
             tags: ['Camera'],
-            summary: '새 카드 생성',
-            description: '실시간 카메라로 인해 자동으로 감지되고 새로운 영상이 저장됩니다.',
+            summary: '신규 저장 비디오 로드',
+            description: '24시간 내 저장된 영상 가져오기',
             produces: 'application/json',
-            parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
-            ],
-            responses: {
-                200: {
-                    description: '로그인 상태',
-                    content: {
-                        'application/json': {
-                            schema: {
-                                type: 'object',
-                                properties: {
-                                    card_id: {
-                                        type: 'number',
-                                        description: '카드 아이디',
-                                        example: 1,
-                                    },
-                                    user_id: {
-                                        type: 'string',
-                                        description: '유저 아이디',
-                                        example: 'test1234',
-                                    },
-                                    album_id: {
-                                        type: 'number',
-                                        description: '해당 카드가 들어있는 앨범 아이디',
-                                        example: 1,
-                                    },
-                                    expression_label: {
-                                        type: 'string',
-                                        description: '표정 라벨 데이터',
-                                        example: 'happy',
-                                    },
-                                    comment: {
-                                        type: 'string',
-                                        description: '해당 영상에 남긴 코멘트',
-                                        example: '즐거웠던 하루를 기록하다.',
-                                    },
-                                    thumbnail_url: {
-                                        type: 'string',
-                                        description: '썸네일 이미지 S3 URL',
-                                        example: 'https://s3.amazonaws.com/test.jpg',
-                                    },
-                                    video_url: {
-                                        type: 'string',
-                                        description: '비디오 S3 URL',
-                                        example: 'https://s3.amazonaws.com/test.mp4',
-                                    },
-                                    created_at: {
-                                        type: 'datetime',
-                                        description: '영상 생성 날짜',
-                                        example: '2022-02-08T00:00:00.000Z',
-                                    },
-                                    updated_at: {
-                                        type: 'datetime',
-                                        description: '영상 수정 날짜',
-                                        example: '2022-02-08T00:00:00.000Z',
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    },
-    '/card/{userId}/{cardId}': {
-        get: {
-            tags: ['Card'],
-            summary: '단일 영상 가져오기',
-            description: '단일 영상 가져오기 (단일 페이지)',
-            produces: 'application/json',
-            parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
-                {
-                    name: 'cardId',
-                    in: 'path',
-                    description: '카드 아이디',
-                    required: true,
-                },
-            ],
             responses: {
                 200: {
                     description: '사용자 단일 영상 로드 완료',
@@ -105,13 +16,13 @@ export default {
                                     result: {
                                         type: 'object',
                                         properties: {
-                                            card_id: {
+                                            cardId: {
                                                 type: 'number',
                                                 description: '카드 아이디',
-                                                example: 1,
+                                                example: 724,
                                             },
-                                            user_id: {
-                                                type: 'string',
+                                            userId: {
+                                                type: 'number',
                                                 description: '유저 아이디',
                                                 example: 'test1234',
                                             },
@@ -120,7 +31,7 @@ export default {
                                                 description: '해당 카드가 들어있는 앨범 아이디',
                                                 example: 1,
                                             },
-                                            expression_label: {
+                                            expressionLabel: {
                                                 type: 'string',
                                                 description: '표정 라벨 데이터',
                                                 example: 'happy',
@@ -130,22 +41,22 @@ export default {
                                                 description: '해당 영상에 남긴 코멘트',
                                                 example: '즐거웠던 하루를 기록하다.',
                                             },
-                                            thumbnail_url: {
+                                            thumbnailUrl: {
                                                 type: 'string',
                                                 description: '썸네일 이미지 S3 URL',
                                                 example: 'https://s3.amazonaws.com/test.jpg',
                                             },
-                                            video_url: {
+                                            videoUrl: {
                                                 type: 'string',
                                                 description: '비디오 S3 URL',
                                                 example: 'https://s3.amazonaws.com/test.mp4',
                                             },
-                                            created_at: {
+                                            createdAt: {
                                                 type: 'datetime',
                                                 description: '영상 생성 날짜',
                                                 example: '2022-02-08T00:00:00.000Z',
                                             },
-                                            updated_at: {
+                                            updatedAt: {
                                                 type: 'datetime',
                                                 description: '영상 수정 날짜',
                                                 example: '2022-02-08T00:00:00.000Z',
@@ -159,88 +70,30 @@ export default {
                 },
             },
         },
-        delete: {
-            tags: ['Card'],
-            summary: '단일 영상 삭제',
-            description: '단일 영상 삭제 (단일 페이지)',
+        post: {
+            tags: ['Camera'],
+            summary: '새 카드 생성',
+            description: '실시간 카메라로 인해 자동으로 감지되고 새로운 영상이 저장됩니다.',
             produces: 'application/json',
-            parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
-                {
-                    name: 'cardId',
-                    in: 'path',
-                    description: '카드 아이디',
-                    required: true,
-                },
-            ],
-            responses: {
-                200: {
-                    description: '사용자 단일 영상 삭제 완료',
-                    content: {
-                        'application/json': {
-                            schema: {
-                                type: 'string',
-                                example: 'DELETE CARD OK',
-                                properties: 'DELETE CARD OK',
-                            },
-                        },
-                    },
-                },
-            },
-        },
-        put: {
-            tags: ['Card'],
-            summary: '단일 영상 수정',
-            description: '단일 영상 수정 (단일 페이지)',
-            produces: 'application/json',
-            parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
-                {
-                    name: 'cardId',
-                    in: 'path',
-                    description: '카드 아이디',
-                    required: true,
-                },
-            ],
             requestBody: {
                 content: {
-                    'application/json': {
+                    formdata: {
                         schema: {
                             properties: {
-                                album_id: {
-                                    type: 'int',
-                                    description: '앨범 아이디',
-                                    example: 1,
-                                },
-                                expression_label: {
+                                expressionLabel: {
                                     type: 'string',
-                                    description: '녹화 영상 최대 감정 표정',
+                                    description: '표정 라벨',
                                     example: 'happy',
                                 },
-                                comment: {
-                                    type: 'string',
-                                    description: '녹화 영상 코멘트',
-                                    example: '즐겁다 즐거워',
+                                expressionValue: {
+                                    type: 'number',
+                                    description: 'max 표정 관측 수치',
+                                    example: '0.9908276200294495',
                                 },
-                                thumbnail_url: {
-                                    type: 'string',
-                                    description: '녹화 영상 썸네일 URL',
-                                    example: 'https://s3.amazonaws.com/test.jpg',
-                                },
-                                video_url: {
-                                    type: 'string',
-                                    description: '비디오 URL',
-                                    example: 'https://s3.amazonaws.com/test.mp4',
+                                expressionTime: {
+                                    type: 'number',
+                                    description: 'max 표정 관측 시간(썸네일 추출용)',
+                                    example: -32400000,
                                 },
                             },
                         },
@@ -248,14 +101,55 @@ export default {
                 },
             },
             responses: {
+                200: {},
+            },
+        },
+    },
+    '/camera/usim': {
+        get: {
+            tags: ['Camera'],
+            summary: '사용자 얼굴 이미지 가져오기',
+            description: '실시간 카메라 내에서 특정 사용자 감지 목적 ',
+            produces: 'application/json',
+            responses: {
                 200: {
-                    description: '사용자 단일 영상 수정 완료',
+                    description: '사용자 단일 영상 로드 완료',
                     content: {
                         'application/json': {
                             schema: {
-                                type: 'string',
-                                example: 'UPDATE CARD OK',
-                                properties: 'UPDATE CARD OK',
+                                type: 'object',
+                                properties: {
+                                    result: {
+                                        type: 'object',
+                                        properties: {
+                                            imgId: {
+                                                type: 'number',
+                                                description: '이미지 아이디',
+                                                example: 20,
+                                            },
+                                            userId: {
+                                                type: 'string',
+                                                description: '유저 아이디',
+                                                example: 'test1234',
+                                            },
+                                            userImgUrl: {
+                                                type: 'number',
+                                                description: '유저 얼굴 이미지 url',
+                                                example: 'https://carpe-diem-contents.s3.ap-northeast-2.amazonaws.com/user-img/test1234/test.jpg',
+                                            },
+                                            createdAt: {
+                                                type: 'datetime',
+                                                description: '영상 생성 날짜',
+                                                example: '2022-02-08T00:00:00.000Z',
+                                            },
+                                            updatedAt: {
+                                                type: 'datetime',
+                                                description: '영상 수정 날짜',
+                                                example: '2022-02-08T00:00:00.000Z',
+                                            },
+                                        },
+                                    },
+                                },
                             },
                         },
                     },

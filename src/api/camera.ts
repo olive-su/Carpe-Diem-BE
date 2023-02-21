@@ -29,6 +29,7 @@ route.post('/', upload.single('file'), async (req: Request, res: Response) => {
 
     const userId = req.user.user_id;
     const expressionDto = JSON.parse(req.body.expressionData);
+    console.log(expressionDto);
     const videoUrl: string = req.file['key'];
     const thumbnailUrl: string = 'card-thumbnail' + req.file['key'].split('.')[0].replace('album-video', '') + '.jpg';
 

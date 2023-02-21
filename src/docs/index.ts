@@ -3,6 +3,7 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import Swagger from '../loaders/swagger';
 import album from './api/album';
 import auth from './api/auth';
+import camera from './api/camera';
 import card from './api/card';
 
 export default class ApiDocs {
@@ -12,8 +13,9 @@ export default class ApiDocs {
     constructor() {
         this.#apiDocOption = {
             ...auth,
-            ...card,
             ...album,
+            ...camera,
+            ...card,
         };
 
         this.#swagger = new Swagger();
