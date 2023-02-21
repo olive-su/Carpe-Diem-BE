@@ -19,9 +19,6 @@ const putUserInfo = async (userDto, callback) => {
     await User.update(
         {
             userId: userDto.user_id,
-            password: userDto.password,
-            // expressionType: userDto.expression_type,
-            // movementType: userDto.movement_type,
             nickname: userDto.nickname,
             email: userDto.email,
         },

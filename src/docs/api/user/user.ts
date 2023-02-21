@@ -39,21 +39,6 @@ export default {
                                                 description: '유저 닉네임',
                                                 example: '수개미',
                                             },
-                                            password: {
-                                                type: 'string',
-                                                description: '비밀번호',
-                                                example: 'test1234',
-                                            },
-                                            // expression_type: {
-                                            //     type: 'int',
-                                            //     description: '유저에게 받은 감정수치',
-                                            //     example: '3',
-                                            // },
-                                            // movement_Type: {
-                                            //     type: 'int',
-                                            //     description: '유저에게 받은 활발함수치',
-                                            //     example: '2',
-                                            // },
                                             created_at: {
                                                 type: 'datetime',
                                                 description: '유저정보 생성 날짜',
@@ -101,21 +86,6 @@ export default {
                                     description: '유저 닉네임',
                                     example: '수개미',
                                 },
-                                password: {
-                                    type: 'string',
-                                    description: '비밀번호',
-                                    example: 'test1234',
-                                },
-                                // expression_type: {
-                                //     type: 'int',
-                                //     description: '유저에게 받은 감정수치',
-                                //     example: '3',
-                                // },
-                                // movement_Type: {
-                                //     type: 'int',
-                                //     description: '유저에게 받은 활발함수치',
-                                //     example: '2',
-                                // },
                             },
                         },
                     },

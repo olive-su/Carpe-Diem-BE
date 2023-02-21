@@ -2,9 +2,6 @@ import { Model } from 'sequelize';
 
 interface UserAttributes {
     userId: string;
-    password: string;
-    // expressionType: number;
-    // movementType: number;
     nickname: string;
     email: string;
     // other attributes...
@@ -12,11 +9,7 @@ interface UserAttributes {
 export default (sequelize: any, DataTypes: any): any => {
     class User extends Model<UserAttributes> implements UserAttributes {
         userId: string;
-        password: string;
-        // expressionType: number;
-        // movementType: number;
         nickname: string;
-        // static associate(models: any) {}
         email: string;
     }
     User.init(
@@ -27,21 +20,6 @@ export default (sequelize: any, DataTypes: any): any => {
                 primaryKey: true,
                 allowNull: false,
             },
-            password: {
-                field: 'password',
-                type: DataTypes.STRING(50),
-                allowNull: false,
-            },
-            // expressionType: {
-            //     field: 'expression_type',
-            //     type: DataTypes.INTEGER,
-            //     allowNull: false,
-            // },
-            // movementType: {
-            //     field: 'movement_type',
-            //     type: DataTypes.INTEGER,
-            //     allowNull: false,
-            // },
             nickname: {
                 field: 'nickname',
                 type: DataTypes.STRING(50),
