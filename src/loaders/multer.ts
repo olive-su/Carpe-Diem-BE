@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { Request } from 'express';
 import Logger from '../loaders/logger';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
@@ -22,19 +23,23 @@ const upload = multer({
     storage: multerS3({
         s3: s3,
         bucket: config.aws.bucket_name,
-        key: function (req, file, cb) {
+        key: function (req: Request, file, cb) {
             const format = file.originalname.split('.').slice(-1)[0];
             const now = new Date();
-            const userId = req['params'].userId;
+
+            if (!req.user) {
+                Logger.error('[S3 upload] Unautorized.');
+                return cb(new Error('Unautorized.'));
+            }
 
             // 파일 포맷 유효성 검사
             if (!['webm', 'mp4'].includes(format)) {
-                Logger.error('Invalid file format.');
+                Logger.error('[S3 upload] Invalid file format.');
                 return cb(new Error('Only images are allowed'));
             }
 
             Logger.info(`File uploaded successfully.`);
-            cb(null, `album-video/${userId}/${dateFormat(now)}/${file.originalname}`);
+            cb(null, `album-video/${req.user.user_id}/${dateFormat(now)}/${file.originalname}`);
         },
     }),
     limits: { fileSize: 5 * 1024 * 1024 },
