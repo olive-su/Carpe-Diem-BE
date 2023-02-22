@@ -23,7 +23,6 @@ export default (sequelize: any, DataTypes: any): any => {
             nickname: {
                 field: 'nickname',
                 type: DataTypes.STRING(50),
-                allowNull: false,
             },
             email: {
                 field: 'email',

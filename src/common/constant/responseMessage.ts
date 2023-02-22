@@ -1,4 +1,8 @@
 export default {
+    auth: {
+        logout: '로그아웃 되었습니다.',
+        unauthorized: '로그인이 필요합니다.',
+    },
     camera: {
         upload_error: '파일이 존재하지 않습니다.',
         video_error: '영상을 불러올 수 없습니다.',

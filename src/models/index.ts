@@ -15,7 +15,7 @@ const sequelize: any = new Sequelize({
     username: config.db.username,
     password: config.db.password,
     database: config.db.database,
-    timezone: 'Asia/Seoul',
+    timezone: '+09:00',
     dialect: 'mysql',
 });
 
