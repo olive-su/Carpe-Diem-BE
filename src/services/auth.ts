@@ -21,6 +21,7 @@ const signUp = (userDto, callback) => {
         userId: userDto.user_id,
         email: userDto.email,
         nickname: userDto.nickname,
+        profileImg: userDto.profile_img,
     })
         .then((result) => {
             Logger.info(`회원가입이 정상적으로 처리되었습니다. ${result}`);

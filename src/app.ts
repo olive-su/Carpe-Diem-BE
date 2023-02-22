@@ -16,6 +16,7 @@ import cameraRouter from './api/camera';
 import cardRouter from './api/card';
 import albumRouter from './api/album';
 import userRouter from './api/user';
+import friendRouter from './api/friend';
 
 const app = express();
 
@@ -60,6 +61,7 @@ app.use('/camera', cameraRouter);
 app.use('/card', cardRouter);
 app.use('/album', albumRouter);
 app.use('/user', userRouter);
+app.use('/friend', friendRouter);
 
 const startServer = async () => {
     await loaders(app);
