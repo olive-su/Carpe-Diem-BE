@@ -4,6 +4,7 @@ import statusCode from '../common/constant/statusCode';
 import responseMessage from '../common/constant/responseMessage';
 import cardService from '../services/card';
 import cors from 'cors';
+import card from '../docs/api/card/card';
 
 const route = express.Router();
 
@@ -16,8 +17,10 @@ route.use(
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
-route.get('/:userId', async (req: Request, res: Response) => {
-    const userId = req.params.userId;
+route.get('/', async (req: Request, res: Response) => {
+    console.log(req);
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const userId = req.user.user_id;
 
     cardService.getCards(userId, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
@@ -25,7 +28,8 @@ route.get('/:userId', async (req: Request, res: Response) => {
     });
 });
 
-route.get('/:userId/:cardId', async (req: Request, res: Response) => {
+route.get('/:cardId', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
     const cardId = req.params.cardId;
 
     cardService.getCard(cardId, (err, data) => {
@@ -34,7 +38,8 @@ route.get('/:userId/:cardId', async (req: Request, res: Response) => {
     });
 });
 
-route.delete('/:userId/:cardId', async (req: Request, res: Response) => {
+route.delete('/:cardId', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
     const cardId = req.params.cardId;
 
     cardService.deleteCard(cardId, (err, data) => {
@@ -43,9 +48,9 @@ route.delete('/:userId/:cardId', async (req: Request, res: Response) => {
     });
 });
 
-route.put('/:userId/:cardId', async (req: Request, res: Response) => {
-    let cardDto = req.body;
-    cardDto = { user_id: req.params.userId, card_id: req.params.cardId, ...cardDto };
+route.put('/:cardId', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const cardDto = req.body;
     console.log(cardDto);
 
     cardService.putCard(cardDto, (err, data) => {
