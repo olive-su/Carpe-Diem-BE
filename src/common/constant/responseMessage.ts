@@ -17,4 +17,8 @@ export default {
         server_error: '요청한 앨범 데이터를 처리하지 못했습니다.',
         create_error: '새 앨범을 생성하지 못했습니다.',
     },
+    user: {
+        user_error: '요청한 유저의 데이터를 불러오지 못했습니다.',
+        update_error: '요청한 유저의 업데이트를 실패하였습니다.',
+    },
 };

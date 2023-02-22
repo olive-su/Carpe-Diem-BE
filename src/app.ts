@@ -15,6 +15,7 @@ import authRouter from './api/auth';
 import cameraRouter from './api/camera';
 import cardRouter from './api/card';
 import albumRouter from './api/album';
+import userRouter from './api/user';
 
 const app = express();
 

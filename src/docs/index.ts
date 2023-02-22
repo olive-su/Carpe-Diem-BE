@@ -5,6 +5,7 @@ import album from './api/album';
 import auth from './api/auth';
 import camera from './api/camera';
 import card from './api/card';
+import user from './api/user';
 
 export default class ApiDocs {
     #apiDocOption;
@@ -16,6 +17,7 @@ export default class ApiDocs {
             ...album,
             ...camera,
             ...card,
+            ...user,
         };
 
         this.#swagger = new Swagger();
