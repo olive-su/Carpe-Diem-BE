@@ -4,7 +4,6 @@ import statusCode from '../common/constant/statusCode';
 import responseMessage from '../common/constant/responseMessage';
 import cardService from '../services/card';
 import cors from 'cors';
-import card from '../docs/api/card/card';
 
 const route = express.Router();
 
