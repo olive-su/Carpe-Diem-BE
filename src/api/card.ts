@@ -41,7 +41,7 @@ route.delete('/:cardId', async (req: Request, res: Response) => {
     const cardId = req.params.cardId;
 
     cardService.deleteCard(cardId, (err, data) => {
-        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.delete_error });
         else res.status(statusCode.OK).send(data);
     });
 });
@@ -52,7 +52,7 @@ route.put('/:cardId', async (req: Request, res: Response) => {
     console.log(cardDto);
 
     cardService.putCard(cardDto, (err, data) => {
-        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.server_error });
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.card.update_error });
         else res.status(statusCode.OK).send(data);
     });
 });
