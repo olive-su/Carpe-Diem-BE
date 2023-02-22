@@ -17,20 +17,12 @@ route.use(
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
-route.get('/:userId', (req, res) => {
-    userService.getUserInfo(req.params.userId, (err, data) => {
+route.get('/', (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const userId = req.user.user_id;
+
+    userService.getUserInfo(userId, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.user.user_error });
-        else res.status(statusCode.OK).send(data);
-    });
-});
-
-route.put('/:userId', async (req: Request, res: Response) => {
-    let userDto = req.body;
-    userDto = { user_id: req.params.userId, ...userDto };
-    console.log(userDto);
-
-    userService.putUserInfo(userDto, (err, data) => {
-        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.user.update_error });
         else res.status(statusCode.OK).send(data);
     });
 });
