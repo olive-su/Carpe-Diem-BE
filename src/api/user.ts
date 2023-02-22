@@ -27,4 +27,14 @@ route.get('/', (req: Request, res: Response) => {
     });
 });
 
+route.get('/:friendEmail', (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const friendEmail = req.params.friendEmail;
+
+    userService.getFriendUserInfo(friendEmail, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.user.friend_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
 export default route;

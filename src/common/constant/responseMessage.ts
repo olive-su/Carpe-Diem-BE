@@ -11,7 +11,8 @@ export default {
     },
     card: {
         server_error: '요청한 카드 데이터를 처리하지 못했습니다.',
-        update_error: '업데이트에 실패하였습니다.',
+        update_error: '카드 업데이트를 실패하였습니다.',
+        delete_error: '요청한 카드 삭제를 실패하였습니다.',
     },
     album: {
         server_error: '요청한 앨범 데이터를 처리하지 못했습니다.',
@@ -20,8 +21,10 @@ export default {
     user: {
         user_error: '요청한 유저의 데이터를 불러오지 못했습니다.',
         update_error: '요청한 유저의 업데이트를 실패하였습니다.',
+        friend_error: '검색한 유저의 데이터를 불러오지 못했습니다.',
     },
     friend: {
         email_error: '친구 목록 불러오기를 실패하였습니다.',
+        delete_error: '요청한 친구의 삭제를 실패하였습니다.',
     },
 };
