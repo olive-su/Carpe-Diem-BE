@@ -12,7 +12,7 @@ const getFriendList = async (userEmail, callback) => {
             const friendEmails = result.map((r) => r.friendEmail);
 
             const friends = await User.findAll({
-                attributes: ['email', 'nickname', 'profile_img'],
+                attributes: ['user_id', 'email', 'nickname', 'profile_img'],
                 where: { email: { [Op.in]: friendEmails } },
             });
 
@@ -25,4 +25,35 @@ const getFriendList = async (userEmail, callback) => {
         });
 };
 
-export default { getFriendList };
+const deleteFriend = async (deleteEmail, callback) => {
+    console.log(deleteEmail[0], deleteEmail[1]);
+
+    // await Friend.findAll({ where: { user_email: deleteEmail[0] } })
+    //     .then(async (result) => {
+    //         Logger.info(`Success! ${result}`);
+    //         callback(null, 'DELETE FRIEND OK');
+    //     })
+    //     .catch((err) => {
+    //         Logger.error(err);
+    //         return callback(err);
+    //     });
+
+    await Friend.destroy({ where: { user_email: deleteEmail[0], friend_email: deleteEmail[1] } })
+        .then(async (result) => {
+            await Friend.destroy({ where: { user_email: deleteEmail[1], friend_email: deleteEmail[0] } })
+                .then((result) => {
+                    Logger.info(`Success! ${result}`);
+                    callback(null, 'DELETE FRIEND OK');
+                })
+                .catch((err) => {
+                    Logger.error(err);
+                    return callback(err);
+                });
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getFriendList, deleteFriend };
