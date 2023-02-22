@@ -46,4 +46,16 @@ const getFriendUserInfo = async (friendEmail, callback) => {
         });
 };
 
-export default { getUserInfo, putUserInfo, getFriendUserInfo };
+const getAllUserInfo = async (userId, callback) => {
+    await User.findAll()
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, result);
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getUserInfo, putUserInfo, getFriendUserInfo, getAllUserInfo };

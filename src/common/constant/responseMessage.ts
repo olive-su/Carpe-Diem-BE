@@ -20,6 +20,7 @@ export default {
     },
     user: {
         user_error: '요청한 유저의 데이터를 불러오지 못했습니다.',
+        all_user_error: '유저 목록을 불러오지 못했습니다.',
         update_error: '요청한 유저의 업데이트를 실패하였습니다.',
         friend_error: '검색한 유저의 데이터를 불러오지 못했습니다.',
     },
