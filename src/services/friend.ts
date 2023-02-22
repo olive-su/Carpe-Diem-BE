@@ -4,6 +4,7 @@ import Logger from '../loaders/logger';
 import db from '../models';
 
 const Friend = db.friend;
+const FriendRequest = db.friendRequest;
 const User = db.user;
 
 const getFriendList = async (userEmail, callback) => {
@@ -28,16 +29,6 @@ const getFriendList = async (userEmail, callback) => {
 const deleteFriend = async (deleteEmail, callback) => {
     console.log(deleteEmail[0], deleteEmail[1]);
 
-    // await Friend.findAll({ where: { user_email: deleteEmail[0] } })
-    //     .then(async (result) => {
-    //         Logger.info(`Success! ${result}`);
-    //         callback(null, 'DELETE FRIEND OK');
-    //     })
-    //     .catch((err) => {
-    //         Logger.error(err);
-    //         return callback(err);
-    //     });
-
     await Friend.destroy({ where: { user_email: deleteEmail[0], friend_email: deleteEmail[1] } })
         .then(async (result) => {
             await Friend.destroy({ where: { user_email: deleteEmail[1], friend_email: deleteEmail[0] } })
@@ -56,4 +47,23 @@ const deleteFriend = async (deleteEmail, callback) => {
         });
 };
 
-export default { getFriendList, deleteFriend };
+const getSendRequestList = async (userEmail, callback) => {
+    await FriendRequest.findAll({ where: { send_email: userEmail } })
+        .then(async (result) => {
+            const receiveEmails = result.map((r) => r.receiveEmail);
+
+            const receiver = await User.findAll({
+                attributes: ['user_id', 'email', 'nickname', 'profile_img'],
+                where: { email: { [Op.in]: receiveEmails } },
+            });
+
+            Logger.info(`Success! ${receiver}`);
+            callback(null, receiver);
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getFriendList, deleteFriend, getSendRequestList };
