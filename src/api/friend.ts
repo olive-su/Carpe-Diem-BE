@@ -36,7 +36,7 @@ route.delete('/:friendEmail', async (req: Request, res: Response) => {
     });
 });
 
-route.get('/request/', (req: Request, res: Response) => {
+route.get('/request', (req: Request, res: Response) => {
     if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
 
     friendService.getSendRequestList(req.user.email, (err, data) => {
