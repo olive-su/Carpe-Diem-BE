@@ -78,6 +78,5 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
       - name: Docker run
         run: |
-          docker stop backend && docker rm backend && docker rmi ${{ env.DOCKER_IMAGE }}:latest
           docker run -d -p 4000:4000 --name backend --restart always ${{ env.DOCKER_IMAGE }}:latest
     
