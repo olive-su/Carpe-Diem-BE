@@ -59,6 +59,7 @@ app.use('/auth', authRouter(passport));
 app.use('/camera', cameraRouter);
 app.use('/card', cardRouter);
 app.use('/album', albumRouter);
+app.use('/user', userRouter);
 
 const startServer = async () => {
     await loaders(app);
