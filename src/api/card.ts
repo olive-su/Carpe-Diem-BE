@@ -18,7 +18,6 @@ route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
 route.get('/', async (req: Request, res: Response) => {
-    console.log(req);
     if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
     const userId = req.user.user_id;
 
