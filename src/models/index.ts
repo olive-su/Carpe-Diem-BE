@@ -5,6 +5,7 @@ import user from './User';
 import usim from './Usim';
 import album from './Album';
 import card from './Card';
+import friend from './Friend';
 import expression from './Expression';
 
 const db: any = {};
@@ -22,6 +23,7 @@ const sequelize: any = new Sequelize({
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.friend = friend(sequelize, DataTypes);
 db.user = user(sequelize, DataTypes);
 db.usim = usim(sequelize, DataTypes);
 db.album = album(sequelize, DataTypes);

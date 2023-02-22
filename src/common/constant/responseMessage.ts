@@ -21,4 +21,7 @@ export default {
         user_error: '요청한 유저의 데이터를 불러오지 못했습니다.',
         update_error: '요청한 유저의 업데이트를 실패하였습니다.',
     },
+    friend: {
+        email_error: '친구 목록 불러오기를 실패하였습니다.',
+    },
 };

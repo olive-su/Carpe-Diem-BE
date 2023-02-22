@@ -18,6 +18,7 @@ export default new GoogleStrategy(
             user_id: profile.id,
             email: profile.emails[0].value,
             nickname: profile.displayName,
+            profile_img: profile.picture,
         };
         console.log(userData);
         try {
@@ -28,6 +29,7 @@ export default new GoogleStrategy(
                         return cb(null, userData);
                     });
                 } else {
+                    // ! 구글 프로필 업데이트시 DB 업데이트 코드 추가
                     Logger.info(`[googleLogin] ${userData}`);
                     return cb(null, userData);
                 }
