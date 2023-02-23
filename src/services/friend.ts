@@ -26,6 +26,22 @@ const getFriendList = async (userEmail, callback) => {
         });
 };
 
+const postFriend = (friendDto, callback) => {
+    FriendRequest.create({
+        sendEmail: friendDto.send_email,
+        receiveEmail: friendDto.receive_email,
+        check: friendDto.check,
+    })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, 'CREATE FRIEND REQUEST OK');
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
 const deleteFriend = async (deleteEmail, callback) => {
     console.log(deleteEmail[0], deleteEmail[1]);
 
@@ -66,4 +82,4 @@ const getSendRequestList = async (userEmail, callback) => {
         });
 };
 
-export default { getFriendList, deleteFriend, getSendRequestList };
+export default { getFriendList, deleteFriend, getSendRequestList, postFriend };

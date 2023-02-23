@@ -26,6 +26,17 @@ route.get('/', (req: Request, res: Response) => {
     });
 });
 
+route.post('/', (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+
+    const friendDto = req.body;
+    friendDto.send_email = req.user.email;
+    friendService.postFriend(friendDto, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.friend.post_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
 route.delete('/:friendEmail', async (req: Request, res: Response) => {
     if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
     const deleteEmail = [req.user.email, req.params.friendEmail];
