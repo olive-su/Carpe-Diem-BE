@@ -1,77 +1,85 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import express from 'express';
+import http from 'http';
+import https from 'https';
 import cors from 'cors';
-import flash from 'connect-flash';
-import session from 'express-session';
-import mysqlSession from 'express-mysql-session';
+import fs from 'fs';
+import { Server } from 'socket.io';
+import { instrument } from '@socket.io/admin-ui';
+
 import Logger from './loaders/logger';
 import loaders from './loaders';
 import config from './config';
-
-import { PassportDB } from './types/passport';
-import Passport from './config/passport';
-
-import authRouter from './api/auth';
+import albumRouter from './api/album';
 import cameraRouter from './api/camera';
 import cardRouter from './api/card';
-import albumRouter from './api/album';
-import userRouter from './api/user';
-import friendRouter from './api/friend';
 
 const app = express();
+// const privateKey = fs.readFileSync(config.ssl.privateKey);
+// const certificate = fs.readFileSync(config.ssl.certificate);
+// const credentials = { key: privateKey, cert: certificate };
 
-/* Passport */
-const sessionDatabase: PassportDB = {
-    host: config.db.host,
-    port: config.db.port,
-    user: config.db.username,
-    password: config.db.password,
-    database: config.db.database,
-};
-const MySqlStore = mysqlSession(session);
+app.use('/camera', cameraRouter);
+app.use('/card', cardRouter);
+app.use('/album', albumRouter);
 
-app.use(express.json());
-app.use(flash());
 app.use(
     cors({
         origin: true,
         credentials: true,
     }),
 );
+app.use(express.json());
 
-app.use(
-    session({
-        key: 'session_cookie_name',
-        secret: 'session_cookie_secret',
-        store: new MySqlStore(sessionDatabase),
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            secure: false,
-            maxAge: 24 * 60 * 60 * 1000,
-        },
-    }),
-);
-
-const passport = Passport(app);
-
-/* Router */
-app.use('/auth', authRouter(passport));
-app.use('/camera', cameraRouter);
-app.use('/card', cardRouter);
-app.use('/album', albumRouter);
-app.use('/user', userRouter);
-app.use('/friend', friendRouter);
-
+const httpsNodeServer = new http.Server(app);
+const httpsSocketServer = new http.Server(app);
 const startServer = async () => {
     await loaders(app);
 
-    app.listen(config.port, () => {
-        Logger.info(`🛡️  Server listening on: http://${config.host}:${config.port} 🛡️`);
-    }).on('error', (err) => {
-        Logger.error(err);
-        process.exit(1);
-    });
+    httpsNodeServer
+        .listen(config.port, () => {
+            Logger.info(`🛡️  Server listening on: http://${config.host}:${config.port} 🛡️`);
+        })
+        .on('error', (err) => {
+            Logger.error(err);
+            process.exit(1);
+        });
 };
 
 startServer();
+
+// socket settings
+const wsServer = new Server(httpsSocketServer, {
+    cors: {
+        origin: '*',
+        credentials: true,
+    },
+});
+
+httpsSocketServer.listen(5000, () => {
+    console.log(`Listening on port 5000.`);
+});
+
+instrument(wsServer, {
+    auth: false,
+});
+
+wsServer.on('connection', (socket) => {
+    console.log(wsServer.sockets.adapter);
+    socket.on('join_room', (roomName, done) => {
+        socket.join(roomName);
+        socket.to(roomName).emit('welcome');
+    });
+
+    socket.on('offer', (offer, roomName) => {
+        socket.to(roomName).emit('offer', offer);
+    });
+
+    socket.on('answer', (answer, roomName) => {
+        socket.to(roomName).emit('answer', answer);
+    });
+    socket.on('ice', (ice, roomName) => {
+        socket.to(roomName).emit('ice', ice);
+    });
+});
+
+export default app;
