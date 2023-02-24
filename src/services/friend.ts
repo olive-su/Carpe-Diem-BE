@@ -64,13 +64,32 @@ const deleteFriend = async (deleteEmail, callback) => {
 };
 
 const getSendRequestList = async (userEmail, callback) => {
-    await FriendRequest.findOne({ where: { send_email: userEmail } })
+    await FriendRequest.findAll({ where: { send_email: userEmail } })
         .then(async (result) => {
             const receiveEmails = result.map((r) => r.receiveEmail);
 
             const receiver = await User.findAll({
                 attributes: ['user_id', 'email', 'nickname', 'profile_img'],
                 where: { email: { [Op.in]: receiveEmails } },
+            });
+
+            Logger.info(`Success! ${receiver}`);
+            callback(null, receiver);
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+const getReceiveRequestList = async (userEmail, callback) => {
+    await FriendRequest.findAll({ where: { receive_email: userEmail } })
+        .then(async (result) => {
+            const sendEmails = result.map((r) => r.sendEmail);
+
+            const receiver = await User.findAll({
+                attributes: ['user_id', 'email', 'nickname', 'profile_img'],
+                where: { email: { [Op.in]: sendEmails } },
             });
 
             Logger.info(`Success! ${receiver}`);
@@ -101,7 +120,7 @@ const putChoiceRequest = async (putRequestFriend, callback) => {
                         await FriendRequest.destroy({ where: { send_email: send_email, receive_email: receive_email } })
                             .then((result) => {
                                 Logger.info(`Success! ${result}`);
-                                callback(null, 'ACCEPTE FRIEND REQUEST AND DELETE FRIEND REQUEST OK');
+                                callback(null, 'ACCEPT FRIEND REQUEST AND DELETE FRIEND REQUEST OK');
                             })
                             .catch((err) => {
                                 Logger.error(err);
@@ -130,4 +149,4 @@ const putChoiceRequest = async (putRequestFriend, callback) => {
     }
 };
 
-export default { getFriendList, deleteFriend, getSendRequestList, postFriend, putChoiceRequest };
+export default { getFriendList, deleteFriend, getSendRequestList, getReceiveRequestList, postFriend, putChoiceRequest };
