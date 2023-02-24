@@ -50,6 +50,7 @@ const postAlbum = (albumDto, callback) => {
         userId: albumDto.user_id,
         title: albumDto.title,
         cardId: albumDto.card_id,
+        coverImgUrl: albumDto.cover_img_url,
     })
         .then((result) => {
             Logger.info(`Success! ${result}`);
