@@ -56,6 +56,15 @@ route.get('/request', (req: Request, res: Response) => {
     });
 });
 
+route.get('/receive', (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+
+    friendService.getReceiveRequestList(req.user.email, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.friend.receive_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
 route.put('/request/:friendEmail/:check', (req: Request, res: Response) => {
     if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
 
