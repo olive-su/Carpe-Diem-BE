@@ -1,7 +1,7 @@
 import * as winston from 'winston';
 import winstonDaily from 'winston-daily-rotate-file';
 import * as S3StreamLogger from 's3-streamlogger';
-import config from '../config';
+import config from '../../config';
 
 const { combine, timestamp, printf } = winston.format;
 
@@ -12,7 +12,7 @@ interface LogInfo {
 }
 
 function s3_stream(level) {
-    const time_data = new Date().toISOString(); // set Time in Seoul, South Korea
+    const time_data = new Date();
 
     return new S3StreamLogger.S3StreamLogger({
         bucket: `${config.aws.log_bucket_name}`,
