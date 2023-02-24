@@ -8,11 +8,11 @@ const Card = db.card;
 const getAlbums = async (userId, callback) => {
     await Album.findAll({ where: { user_id: userId } })
         .then((result) => {
-            Logger.info(`Success! ${result}`);
+            Logger.info(`[getAlbums]Success! ${result}`);
             callback(null, result);
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[getAlbums]Error', err);
             return callback(err);
         });
 };
@@ -20,11 +20,11 @@ const getAlbums = async (userId, callback) => {
 const getAlbum = (albumId, callback) => {
     Album.findOne({ where: { album_id: albumId } })
         .then((result) => {
-            Logger.info(`Success! ${result}`);
+            Logger.info(`[getAlbum]Success! ${result}`);
             return callback(null, result);
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[getAlbum]Error', err);
             return callback(err);
         });
 };
@@ -36,11 +36,11 @@ const getAlbumCard = async (cardId, callback) => {
 
     await Card.findAll({ where: Sequelize.literal(cardIdMatchArray.join(' OR ')) })
         .then((result) => {
-            Logger.info(`Success! ${result}`);
+            Logger.info(`[getAlbumCard]Success! ${result}`);
             callback(null, result);
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[getAlbumCard]Error', err);
             return callback(err);
         });
 };
@@ -53,10 +53,10 @@ const postAlbum = (albumDto, callback) => {
     })
         .then((result) => {
             Logger.info(`Success! ${result}`);
-            callback(null, 'CREATE ALBUM OK');
+            callback(null, '[postAlbum]CREATE ALBUM OK');
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[postAlbum]Error', err);
             return callback(err);
         });
 };
@@ -73,11 +73,11 @@ const putAlbum = async (albumDto, callback) => {
         { where: { albumId: albumDto.album_id } },
     )
         .then((result) => {
-            Logger.info(`Success! ${result}`);
+            Logger.info(`[putAlbum]Success! ${result}`);
             callback(null, 'UPDATE ALBUM OK');
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[putAlbum]Error', err);
             return callback(err);
         });
 };
@@ -85,11 +85,11 @@ const putAlbum = async (albumDto, callback) => {
 const deleteAlbum = async (albumId, callback) => {
     await Album.destroy({ where: { album_id: albumId } })
         .then((result) => {
-            Logger.info(`Success! ${result}`);
+            Logger.info(`[deleteAlbum]Success! ${result}`);
             callback(null, 'DELETE ALBUM OK');
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[deleteAlbum]Error', err);
             return callback(err);
         });
 };

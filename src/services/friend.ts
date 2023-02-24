@@ -17,11 +17,11 @@ const getFriendList = async (userEmail, callback) => {
                 where: { email: { [Op.in]: friendEmails } },
             });
 
-            Logger.info(`Success! ${friends}`);
+            Logger.info(`[getFriendList]Success! ${friends}`);
             callback(null, friends);
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[getFriendList]Error', err);
             return callback(err);
         });
 };
@@ -33,11 +33,11 @@ const postFriend = (friendDto, callback) => {
         check: friendDto.check,
     })
         .then((result) => {
-            Logger.info(`Success! ${result}`);
+            Logger.info(`[postFriend]Success! ${result}`);
             callback(null, 'CREATE FRIEND REQUEST OK');
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[postFriend]Error', err);
             return callback(err);
         });
 };
@@ -49,16 +49,16 @@ const deleteFriend = async (deleteEmail, callback) => {
         .then(async (result) => {
             await Friend.destroy({ where: { user_email: deleteEmail[1], friend_email: deleteEmail[0] } })
                 .then((result) => {
-                    Logger.info(`Success! ${result}`);
+                    Logger.info(`[deleteFriend]Success! ${result}`);
                     callback(null, 'DELETE FRIEND OK');
                 })
                 .catch((err) => {
-                    Logger.error(err);
+                    Logger.error('[deleteFriend]Error', err);
                     return callback(err);
                 });
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[deleteFriend]Error', err);
             return callback(err);
         });
 };
@@ -73,11 +73,11 @@ const getSendRequestList = async (userEmail, callback) => {
                 where: { email: { [Op.in]: receiveEmails } },
             });
 
-            Logger.info(`Success! ${receiver}`);
+            Logger.info(`[getSendRequestList]Success! ${receiver}`);
             callback(null, receiver);
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[getSendRequestList]Error', err);
             return callback(err);
         });
 };
@@ -92,11 +92,11 @@ const getReceiveRequestList = async (userEmail, callback) => {
                 where: { email: { [Op.in]: sendEmails } },
             });
 
-            Logger.info(`Success! ${receiver}`);
+            Logger.info(`[getReceiveRequestList]Success! ${receiver}`);
             callback(null, receiver);
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[getReceiveRequestList]Error', err);
             return callback(err);
         });
 };
@@ -119,31 +119,31 @@ const putChoiceRequest = async (putRequestFriend, callback) => {
                     .then(async (result) => {
                         await FriendRequest.destroy({ where: { send_email: send_email, receive_email: receive_email } })
                             .then((result) => {
-                                Logger.info(`Success! ${result}`);
+                                Logger.info(`[putChoiceRequest]Success! ${result}`);
                                 callback(null, 'ACCEPT FRIEND REQUEST AND DELETE FRIEND REQUEST OK');
                             })
                             .catch((err) => {
-                                Logger.error(err);
+                                Logger.error('[putChoiceRequest]Error', err);
                                 return callback(err);
                             });
                     })
                     .catch((err) => {
-                        Logger.error(err);
+                        Logger.error('[putChoiceRequest]Error', err);
                         return callback(err);
                     });
             })
             .catch((err) => {
-                Logger.error(err);
+                Logger.error('[putChoiceRequest]Error', err);
                 return callback(err);
             });
     } else if (check == 2) {
         await FriendRequest.destroy({ where: { send_email: send_email, receive_email: receive_email } })
             .then((result) => {
-                Logger.info(`Success! ${result}`);
+                Logger.info(`[putChoiceRequest]Success! ${result}`);
                 callback(null, 'DELETE FRIEND REQUEST OK');
             })
             .catch((err) => {
-                Logger.error(err);
+                Logger.error('[putChoiceRequest]Error', err);
                 return callback(err);
             });
     }
