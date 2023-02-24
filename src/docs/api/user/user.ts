@@ -1,18 +1,10 @@
 export default {
-    '/user/{userId}': {
+    '/user': {
         get: {
             tags: ['User'],
             summary: '회원 정보 가져오기',
             description: '회원 정보 (마이페이지)',
             produces: 'application/json',
-            parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
-            ],
             responses: {
                 200: {
                     description: '회원 정보 가져오기',
@@ -56,50 +48,14 @@ export default {
                         },
                     },
                 },
-            },
-        },
-        put: {
-            tags: ['User'],
-            summary: '유저 정보 수정',
-            description: '유저 정보 수정 (마이페이지)',
-            produces: 'application/json',
-            parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
-            ],
-            requestBody: {
-                content: {
-                    'application/json': {
-                        schema: {
-                            properties: {
-                                email: {
-                                    type: 'string',
-                                    description: '유저 이메일',
-                                    example: 'test@gmail.com',
-                                },
-                                nickname: {
-                                    type: 'string',
-                                    description: '유저 닉네임',
-                                    example: '수개미',
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-            responses: {
-                200: {
-                    description: '유저 정보 수정 완료',
+                401: {
+                    description: '회원 정보 가져오기 실패',
                     content: {
                         'application/json': {
                             schema: {
                                 type: 'string',
-                                example: 'UPDATE USER OK',
-                                properties: 'UPDATE USER OK',
+                                description: '로그인 실패',
+                                example: '로그인이 필요합니다',
                             },
                         },
                     },

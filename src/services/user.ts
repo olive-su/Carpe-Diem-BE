@@ -34,4 +34,28 @@ const putUserInfo = async (userDto, callback) => {
         });
 };
 
-export default { getUserInfo, putUserInfo };
+const getFriendUserInfo = async (friendEmail, callback) => {
+    await User.findOne({ where: { email: friendEmail } })
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, result);
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+const getAllUserInfo = async (userId, callback) => {
+    await User.findAll()
+        .then((result) => {
+            Logger.info(`Success! ${result}`);
+            callback(null, result);
+        })
+        .catch((err) => {
+            Logger.error(err);
+            return callback(err);
+        });
+};
+
+export default { getUserInfo, putUserInfo, getFriendUserInfo, getAllUserInfo };

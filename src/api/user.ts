@@ -17,20 +17,32 @@ route.use(
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
-route.get('/:userId', (req, res) => {
-    userService.getUserInfo(req.params.userId, (err, data) => {
+route.get('/', (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const userId = req.user.user_id;
+
+    userService.getUserInfo(userId, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.user.user_error });
         else res.status(statusCode.OK).send(data);
     });
 });
 
-route.put('/:userId', async (req: Request, res: Response) => {
-    let userDto = req.body;
-    userDto = { user_id: req.params.userId, ...userDto };
-    console.log(userDto);
+route.get('/friend/:friendEmail', (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const friendEmail = req.params.friendEmail;
 
-    userService.putUserInfo(userDto, (err, data) => {
-        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.user.update_error });
+    userService.getFriendUserInfo(friendEmail, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.user.friend_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
+route.get('/all', (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const userId = req.user.user_id;
+
+    userService.getAllUserInfo(userId, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.user.all_user_error });
         else res.status(statusCode.OK).send(data);
     });
 });
