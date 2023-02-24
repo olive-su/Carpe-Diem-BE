@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: [ self-hosted, CICD.yml ]
+    runs-on: [ self-hosted, carpediem-be ]
     strategy:
       matrix:
         node-version: [18.13.0]
