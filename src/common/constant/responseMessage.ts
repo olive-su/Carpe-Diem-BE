@@ -32,5 +32,6 @@ export default {
         receive_error: '받은 친구 요청 목록 불러오기를 실패하였습니다.',
         post_error: '친구 추가 요청을 실패하였습니다.',
         request_choice_error: '요청한 데이터를 처리하지 못했습니다.',
+        friend_library_error: '친구의 서재를 불러오지 못했습니다.',
     },
 };
