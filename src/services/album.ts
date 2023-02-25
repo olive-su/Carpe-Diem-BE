@@ -95,4 +95,26 @@ const deleteAlbum = async (albumId, callback) => {
         });
 };
 
-export default { getAlbums, getAlbum, getAlbumCard, postAlbum, putAlbum, deleteAlbum };
+const putAlbumShowCheck = async (albumDto, callback) => {
+    await Album.update(
+        {
+            userId: albumDto.user_id,
+            cardId: albumDto.card_id,
+            albumId: albumDto.album_id,
+            title: albumDto.title,
+            coverImgUrl: albumDto.thumbnail_url,
+            showCheck: albumDto.show_check,
+        },
+        { where: { albumId: albumDto.album_id } },
+    )
+        .then((result) => {
+            Logger.info(`[putAlbumShowCheck]Success! ${result}`);
+            callback(null, 'UPDATE ALBUM Check OK');
+        })
+        .catch((err) => {
+            Logger.error('[putAlbumShowCheck]Error', err);
+            return callback(err);
+        });
+};
+
+export default { getAlbums, getAlbum, getAlbumCard, postAlbum, putAlbum, deleteAlbum, putAlbumShowCheck };

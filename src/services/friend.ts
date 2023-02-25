@@ -6,6 +6,7 @@ import db from '../models';
 const Friend = db.friend;
 const FriendRequest = db.friendRequest;
 const User = db.user;
+const Album = db.album;
 
 const getFriendList = async (userEmail, callback) => {
     await Friend.findAll({ where: { user_email: userEmail } })
@@ -149,4 +150,23 @@ const putChoiceRequest = async (putRequestFriend, callback) => {
     }
 };
 
-export default { getFriendList, deleteFriend, getSendRequestList, getReceiveRequestList, postFriend, putChoiceRequest };
+const getFriendLibrary = async (friendEmail, callback) => {
+    await User.findOne({ where: { email: friendEmail } })
+        .then(async (result) => {
+            await Album.findAll({ where: { user_id: result.userId, show_check: 1 } })
+                .then(async (result) => {
+                    Logger.info(`[getFriendLibrary]Success! ${result}`);
+                    callback(null, result);
+                })
+                .catch((err) => {
+                    Logger.error('[getFriendLibrary]Error', err);
+                    return callback(err);
+                });
+        })
+        .catch((err) => {
+            Logger.error('[getFriendLibrary]Error', err);
+            return callback(err);
+        });
+};
+
+export default { getFriendList, deleteFriend, getSendRequestList, getReceiveRequestList, postFriend, putChoiceRequest, getFriendLibrary };
