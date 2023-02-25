@@ -1,8 +1,12 @@
 import swaggerUI from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import Swagger from '../loaders/swagger';
-import card from './api/card';
 import album from './api/album';
+import auth from './api/auth';
+import camera from './api/camera';
+import card from './api/card';
+import user from './api/user';
+import friend from './api/friend';
 
 export default class ApiDocs {
     #apiDocOption;
@@ -10,8 +14,12 @@ export default class ApiDocs {
 
     constructor() {
         this.#apiDocOption = {
-            ...card,
+            ...auth,
             ...album,
+            ...camera,
+            ...card,
+            ...user,
+            ...friend,
         };
 
         this.#swagger = new Swagger();

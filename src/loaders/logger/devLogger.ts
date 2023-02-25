@@ -1,4 +1,4 @@
-import winston from 'winston';
+import * as winston from 'winston';
 import winstonDaily from 'winston-daily-rotate-file';
 import appRoot from 'app-root-path';
 
@@ -6,7 +6,13 @@ const logDir = `${appRoot}/logs`;
 
 const { combine, timestamp, printf, colorize, simple } = winston.format;
 
-const logFormat = printf((info) => {
+interface LogInfo {
+    level: string;
+    message: string;
+    timestamp: string;
+}
+
+const logFormat = printf((info: LogInfo) => {
     return `${info.timestamp} ${info.level}: ${info.message}`;
 });
 
@@ -14,7 +20,7 @@ const logFormat = printf((info) => {
  * Log Level
  * error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6
  */
-const logger = winston.createLogger({
+const logger: winston.Logger = winston.createLogger({
     format: combine(
         timestamp({
             format: 'YYYY-MM-DD HH:mm:ss',
@@ -53,18 +59,10 @@ const logger = winston.createLogger({
     ],
 });
 
-// logger.stream = {
-//     write: (message: String) => {
-//         logger.info(message);
-//     },
-// };
-
 logger.add(
     new winston.transports.Console({
         format: combine(colorize(), simple()),
     }),
 );
-
-// export default devLogger;
 
 export default logger;

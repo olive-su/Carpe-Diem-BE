@@ -1,18 +1,10 @@
 export default {
-    '/card/{userId}': {
+    '/card': {
         get: {
             tags: ['Card'],
             summary: '전체 영상 가져오기',
             description: '전체 영상 (영상 모아보기 페이지)',
             produces: 'application/json',
-            parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
-            ],
             responses: {
                 200: {
                     description: '사용자 전체 영상 로드 완료',
@@ -76,22 +68,28 @@ export default {
                         },
                     },
                 },
+                401: {
+                    description: '사용자 전체 영상 로드 실패',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'string',
+                                description: '로그인 실패',
+                                example: '로그인이 필요합니다',
+                            },
+                        },
+                    },
+                },
             },
         },
     },
-    '/card/{userId}/{cardId}': {
+    '/card/{cardId}': {
         get: {
             tags: ['Card'],
             summary: '단일 영상 가져오기',
             description: '단일 영상 가져오기 (단일 페이지)',
             produces: 'application/json',
             parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
                 {
                     name: 'cardId',
                     in: 'path',
@@ -162,6 +160,18 @@ export default {
                         },
                     },
                 },
+                401: {
+                    description: '사용자 단일 영상 로드 실패',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'string',
+                                description: '로그인 실패',
+                                example: '로그인이 필요합니다',
+                            },
+                        },
+                    },
+                },
             },
         },
         delete: {
@@ -170,12 +180,6 @@ export default {
             description: '단일 영상 삭제 (단일 페이지)',
             produces: 'application/json',
             parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
                 {
                     name: 'cardId',
                     in: 'path',
@@ -196,6 +200,18 @@ export default {
                         },
                     },
                 },
+                401: {
+                    description: '사용자 단일 영상 삭제 실패',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'string',
+                                description: '로그인 실패',
+                                example: '로그인이 필요합니다',
+                            },
+                        },
+                    },
+                },
             },
         },
         put: {
@@ -204,12 +220,6 @@ export default {
             description: '단일 영상 수정 (단일 페이지)',
             produces: 'application/json',
             parameters: [
-                {
-                    name: 'userId',
-                    in: 'path',
-                    description: '사용자 아이디',
-                    required: true,
-                },
                 {
                     name: 'cardId',
                     in: 'path',
@@ -222,6 +232,16 @@ export default {
                     'application/json': {
                         schema: {
                             properties: {
+                                card_id: {
+                                    type: 'int',
+                                    description: '카드 아이디',
+                                    example: 1,
+                                },
+                                user_id: {
+                                    type: 'string',
+                                    description: '유저 아이디',
+                                    example: '100162696345445292366',
+                                },
                                 album_id: {
                                     type: 'int',
                                     description: '앨범 아이디',
@@ -261,6 +281,18 @@ export default {
                                 type: 'string',
                                 example: 'UPDATE CARD OK',
                                 properties: 'UPDATE CARD OK',
+                            },
+                        },
+                    },
+                },
+                401: {
+                    description: '사용자 단일 영상 수정 실패',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'string',
+                                description: '로그인 실패',
+                                example: '로그인이 필요합니다',
                             },
                         },
                     },

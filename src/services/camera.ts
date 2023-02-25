@@ -17,10 +17,10 @@ const postCamera = async (expressionDto, callback) => {
         thumbnailUrl: expressionDto.thumbnailUrl,
     };
     const expression = await Expression.create(expressionData).catch((err) => {
-        Logger.error(err);
+        Logger.error('[postCameraError', err);
         return callback(err);
     });
-    Logger.info(`Success! ${expression}`);
+    Logger.info(`[postCamera]Success! ${expression}`);
 };
 
 const getVideo = async (userId, callback) => {
@@ -35,11 +35,11 @@ const getVideo = async (userId, callback) => {
         limit: 5,
     })
         .then((result) => {
-            Logger.info(`Success! ${result}`);
+            Logger.info(`[getVideo]Success! ${result}`);
             callback(null, result);
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[getVideo]Error', err);
             return callback(err);
         });
 };
@@ -47,11 +47,11 @@ const getVideo = async (userId, callback) => {
 const getUsim = async (userId, callback) => {
     await Usim.findAll({ where: { user_id: userId } })
         .then((result) => {
-            Logger.info(`Success! ${result}`);
+            Logger.info(`[getUsim]Success! ${result}`);
             callback(null, result);
         })
         .catch((err) => {
-            Logger.error(err);
+            Logger.error('[getUsim]Error', err);
             return callback(err);
         });
 };

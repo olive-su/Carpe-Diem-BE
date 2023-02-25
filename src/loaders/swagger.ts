@@ -1,3 +1,5 @@
+import config from '../config';
+
 const swaggerOpenApiVersion = '3.0.0';
 
 const swaggerInfo = {
@@ -8,8 +10,20 @@ const swaggerInfo = {
 
 const swaggerTags = [
     {
+        name: 'Auth',
+        description: '서버 로그인 API',
+    },
+    {
+        name: 'Camera',
+        description: '실시간 영상 처리 API',
+    },
+    {
         name: 'Card',
         description: '개별 영상 API',
+    },
+    {
+        name: 'Album',
+        description: '영상 집합 API',
     },
 ];
 
@@ -27,8 +41,8 @@ const swaggerProduces = ['application/json'];
 
 const swaggerServers = [
     {
-        url: 'http://localhost:4000',
-        description: '로컬 서버',
+        url: `http://${config.host}:${config.port}`,
+        description: '현재 서버 URL',
     },
 ];
 
@@ -44,12 +58,12 @@ const swaggerSecurityScheme = {
 };
 
 const swaggerComponents = {
-    JWT_ERROR: {
-        description: 'jwt token Error',
+    UNAUTHORIZED_ERROR: {
+        description: 'UNAUTHORIZED ERROR',
         type: 'object',
         properties: {
             401: {
-                type: 'Error token 변조 에러',
+                type: '권한 없음',
             },
         },
     },
@@ -59,7 +73,7 @@ const swaggerComponents = {
         properties: {
             500: {
                 type: 'Internal Error',
-                code: 800,
+                code: 500,
             },
         },
     },
@@ -68,7 +82,7 @@ const swaggerComponents = {
         type: 'object',
         properties: {
             500: {
-                type: 'DB ERROR',
+                type: 'DB Error',
                 code: 500,
             },
         },
