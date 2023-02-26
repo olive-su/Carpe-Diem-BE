@@ -22,11 +22,6 @@ import cardRouter from './api/card';
 import friendRouter from './api/friend';
 import userRouter from './api/user';
 
-import http from 'http';
-// import express from 'express';
-import { Server } from 'socket.io';
-import { instrument } from '@socket.io/admin-ui';
-
 const app = express();
 let nodeServer;
 let socketServer;
@@ -116,9 +111,10 @@ instrument(wsServer, {
 });
 
 wsServer.on('connection', (socket) => {
-    console.log(wsServer.sockets.adapter);
+    // console.log(wsServer.sockets.adapter);
     socket.on('join_room', (roomName, done) => {
         socket.join(roomName);
+        console.log(wsServer.sockets.adapter.rooms);
         socket.to(roomName).emit('welcome');
     });
 
