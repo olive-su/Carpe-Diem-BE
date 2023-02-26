@@ -111,9 +111,10 @@ instrument(wsServer, {
 });
 
 wsServer.on('connection', (socket) => {
-    console.log(wsServer.sockets.adapter);
+    // console.log(wsServer.sockets.adapter);
     socket.on('join_room', (roomName, done) => {
         socket.join(roomName);
+        console.log(wsServer.sockets.adapter.rooms);
         socket.to(roomName).emit('welcome');
     });
 
