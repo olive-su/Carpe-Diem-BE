@@ -17,8 +17,9 @@ route.use(
 route.use(express.json());
 route.use(express.urlencoded({ extended: true }));
 
-route.get('/:userId', async (req: Request, res: Response) => {
-    const userId = req.params.userId;
+route.get('/', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const userId = req.user.user_id;
 
     albumService.getAlbums(userId, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
@@ -26,7 +27,19 @@ route.get('/:userId', async (req: Request, res: Response) => {
     });
 });
 
-route.get('/:userId/:albumId', async (req: Request, res: Response) => {
+route.post('/', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const albumDto = req.body;
+    albumDto.user_id = req.user.user_id;
+
+    albumService.postAlbum(albumDto, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.create_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
+route.get('/:albumId', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
     const albumId = req.params.albumId;
 
     // 앨범 기본 정보 로드
@@ -44,20 +57,21 @@ route.get('/:userId/:albumId', async (req: Request, res: Response) => {
     });
 });
 
-route.post('/:userId', async (req: Request, res: Response) => {
-    const albumDto = req.body;
-    albumDto.user_id = req.params.userId;
+route.delete('/:albumId', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    const albumId = req.params.albumId;
 
-    albumService.postAlbum(albumDto, (err, data) => {
-        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.create_error });
+    albumService.deleteAlbum(albumId, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
         else res.status(statusCode.OK).send(data);
     });
 });
 
-route.put('/:userId/:albumId', async (req: Request, res: Response) => {
+route.put('/:albumId', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
     let albumDto = req.body;
-    albumDto = { user_id: req.params.userId, album_id: req.params.albumId, ...albumDto };
-    console.log(albumDto);
+
+    albumDto = { album_id: req.params.albumId, ...albumDto };
 
     albumService.putAlbum(albumDto, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
@@ -65,11 +79,14 @@ route.put('/:userId/:albumId', async (req: Request, res: Response) => {
     });
 });
 
-route.delete('/:userId/:albumId', async (req: Request, res: Response) => {
-    const albumId = req.params.albumId;
+route.put('/:albumId/:showCheck', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    let albumDto = req.body;
 
-    albumService.deleteAlbum(albumId, (err, data) => {
-        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
+    albumDto = { album_id: req.params.albumId, show_check: req.params.showCheck, ...albumDto };
+
+    albumService.putAlbumShowCheck(albumDto, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.check_error });
         else res.status(statusCode.OK).send(data);
     });
 });

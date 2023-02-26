@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Request } from 'express';
-import Logger from '../loaders/logger';
+import Logger from './logger';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import { S3Client } from '@aws-sdk/client-s3';

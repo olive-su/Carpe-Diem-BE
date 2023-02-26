@@ -5,7 +5,7 @@ WORKDIR /app
 ADD . /app/
 
 RUN npm i
-RUN rm package-lock.json || true
+RUN npm run install:clean
 RUN npm run build
 
 ENV HOST 0.0.0.0
