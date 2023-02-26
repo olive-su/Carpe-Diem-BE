@@ -15,12 +15,7 @@ import config from './config';
 import { PassportDB } from './types/passport';
 import Passport from './config/passport';
 
-import authRouter from './api/auth';
-import albumRouter from './api/album';
-import cameraRouter from './api/camera';
-import cardRouter from './api/card';
-import friendRouter from './api/friend';
-import userRouter from './api/user';
+import { authRouter, albumRouter, cameraRouter, cardRouter, friendRouter, userRouter } from './api';
 
 const app = express();
 let nodeServer;
