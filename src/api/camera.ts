@@ -1,7 +1,7 @@
 import { Container } from 'typedi';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import upload from '../loaders/multer';
+import {upload} from '../loaders/multer';
 import expressRequest from '../types/expressRequest';
 
 import statusCode from '../common/constant/statusCode';
