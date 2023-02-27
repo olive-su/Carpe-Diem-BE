@@ -79,4 +79,16 @@ route.put('/:albumId', async (req: Request, res: Response) => {
     });
 });
 
+route.put('/:albumId/:showCheck', async (req: Request, res: Response) => {
+    if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
+    let albumDto = req.body;
+
+    albumDto = { album_id: req.params.albumId, show_check: req.params.showCheck, ...albumDto };
+
+    albumService.putAlbumShowCheck(albumDto, (err, data) => {
+        if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.check_error });
+        else res.status(statusCode.OK).send(data);
+    });
+});
+
 export default route;
