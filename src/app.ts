@@ -73,6 +73,7 @@ app.use('/card', cardRouter);
 app.use('/camera', cameraRouter);
 app.use('/friend', friendRouter);
 app.use('/user', userRouter);
+app.use('/usim', usimRouter);
 
 const startServer = async () => {
     await loaders(app);
