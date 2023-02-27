@@ -50,9 +50,16 @@ const uploadImg = multer({
         s3: s3,
         bucket: config.aws.bucket_name,
         key: function (req: Request, file, cb) {
+            const format = file.originalname.split('.').slice(-1)[0];
             if (!req.user) {
                 Logger.error('[S3 upload] Unautorized.');
                 return cb(new Error('Unautorized.'));
+            }
+
+            // 파일 포맷 유효성 검사
+            if (!['jpg', 'png', 'gif'].includes(format)) {
+                Logger.error('[S3 upload] Invalid file format.');
+                return cb(new Error('Only images are allowed'));
             }
 
             Logger.info(`File uploaded successfully.`);

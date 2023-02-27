@@ -15,13 +15,7 @@ import config from './config';
 import { PassportDB } from './types/passport';
 import Passport from './config/passport';
 
-import authRouter from './api/auth';
-import albumRouter from './api/album';
-import cameraRouter from './api/camera';
-import cardRouter from './api/card';
-import friendRouter from './api/friend';
-import userRouter from './api/user';
-import usimRouter from './api/usim';
+import { authRouter, albumRouter, cameraRouter, cardRouter, friendRouter, userRouter } from './api';
 
 const app = express();
 let nodeServer;
@@ -65,7 +59,7 @@ app.use(
         saveUninitialized: true,
         cookie: {
             secure: false,
-            maxAge: 24 * 60 * 60 * 1000,
+            maxAge: 12 * 60 * 60 * 1000,
         },
     }),
 );
@@ -79,7 +73,6 @@ app.use('/card', cardRouter);
 app.use('/camera', cameraRouter);
 app.use('/friend', friendRouter);
 app.use('/user', userRouter);
-app.use('/usim', usimRouter);
 
 const startServer = async () => {
     await loaders(app);

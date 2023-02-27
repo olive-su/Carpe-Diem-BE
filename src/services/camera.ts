@@ -45,7 +45,7 @@ const getVideo = async (userId, callback) => {
 };
 
 const getUsim = async (userId, callback) => {
-    await Usim.findAll({ where: { user_id: userId } })
+    await Usim.findAll({ attributes: ['userImgUrl'], where: { user_id: userId } })
         .then((result) => {
             Logger.info(`[getUsim]Success! ${result}`);
             callback(null, result);
@@ -56,4 +56,16 @@ const getUsim = async (userId, callback) => {
         });
 };
 
-export default { getVideo, postCamera, getUsim };
+const postUsim = async (usimDto, callback) => {
+    const usimData = {
+        userId: usimDto.userId,
+        userImgUrl: usimDto.userImgUrl,
+    };
+    const usim = await Usim.create(usimData).catch((err) => {
+        Logger.error('[postUsim]Error', err);
+        return callback(err);
+    });
+    Logger.info(`[postUsim]Success!`, usim);
+};
+
+export default { getVideo, postCamera, getUsim, postUsim };
