@@ -15,7 +15,13 @@ import config from './config';
 import { PassportDB } from './types/passport';
 import Passport from './config/passport';
 
-import { authRouter, albumRouter, cameraRouter, cardRouter, friendRouter, userRouter } from './api';
+import authRouter from './api/auth';
+import cameraRouter from './api/camera';
+import cardRouter from './api/card';
+import albumRouter from './api/album';
+import userRouter from './api/user';
+import friendRouter from './api/friend';
+import friendAlbumRouter from './api/friendAlbum';
 
 const app = express();
 let nodeServer;
@@ -72,6 +78,7 @@ app.use('/album', albumRouter);
 app.use('/card', cardRouter);
 app.use('/camera', cameraRouter);
 app.use('/friend', friendRouter);
+app.use('/friendAlbum', friendAlbumRouter);
 app.use('/user', userRouter);
 
 const startServer = async () => {

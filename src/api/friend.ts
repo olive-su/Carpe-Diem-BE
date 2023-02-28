@@ -76,6 +76,7 @@ route.put('/request/:friendEmail/:check', (req: Request, res: Response) => {
 });
 
 route.get('/:friendEmail', (req: Request, res: Response) => {
+    console.log(req.params.friendEmail);
     if (!req.user) return res.status(statusCode.UNAUTHORIZED).json({ message: responseMessage.auth.unauthorized });
 
     friendService.getFriendLibrary(req.params.friendEmail, (err, data) => {
