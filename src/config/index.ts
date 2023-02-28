@@ -5,9 +5,15 @@ dotenv.config();
 export default {
     host: process.env.HOST,
     port: process.env.PORT,
+    node_env: process.env.NODE_ENV,
+    version: process.env.VERSION,
     client: {
         host: process.env.CLIENT_HOST,
         port: process.env.CLIENT_PORT,
+    },
+    ssl: {
+        privateKey: process.env.SSL_PRIVATE_KEY,
+        certificate: process.env.SSL_CERTIFICATE,
     },
     db: {
         host: process.env.DB_HOST,
@@ -22,6 +28,7 @@ export default {
         access_key_id: process.env.AWS_ACCESS_KEY_ID,
         secret_access_key: process.env.AWS_SECRET_ACCESS_KEY,
         bucket_name: process.env.AWS_BUCKET_NAME,
+        log_bucket_name: process.env.AWS_LOG_BUCKET_NAME,
         region: process.env.AWS_REGION,
     },
     google: {
