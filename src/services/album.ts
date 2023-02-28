@@ -117,4 +117,12 @@ const putAlbumShowCheck = async (albumDto, callback) => {
         });
 };
 
-export default { getAlbums, getAlbum, getAlbumCard, postAlbum, putAlbum, deleteAlbum, putAlbumShowCheck };
+export default {
+    getAlbums,
+    getAlbum,
+    getAlbumCard,
+    postAlbum,
+    putAlbum,
+    deleteAlbum,
+    putAlbumShowCheck,
+};

@@ -17,6 +17,7 @@ import cardRouter from './api/card';
 import albumRouter from './api/album';
 import userRouter from './api/user';
 import friendRouter from './api/friend';
+import friendAlbumRouter from './api/friendAlbum';
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use('/card', cardRouter);
 app.use('/album', albumRouter);
 app.use('/user', userRouter);
 app.use('/friend', friendRouter);
+app.use('/friendAlbum', friendAlbumRouter);
 
 const startServer = async () => {
     await loaders(app);
