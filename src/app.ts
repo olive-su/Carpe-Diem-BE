@@ -16,11 +16,12 @@ import { PassportDB } from './types/passport';
 import Passport from './config/passport';
 
 import authRouter from './api/auth';
-import albumRouter from './api/album';
 import cameraRouter from './api/camera';
 import cardRouter from './api/card';
-import friendRouter from './api/friend';
+import albumRouter from './api/album';
 import userRouter from './api/user';
+import friendRouter from './api/friend';
+import friendAlbumRouter from './api/friendAlbum';
 
 const app = express();
 let nodeServer;
@@ -64,7 +65,7 @@ app.use(
         saveUninitialized: true,
         cookie: {
             secure: false,
-            maxAge: 24 * 60 * 60 * 1000,
+            maxAge: 12 * 60 * 60 * 1000,
         },
     }),
 );
@@ -77,6 +78,7 @@ app.use('/album', albumRouter);
 app.use('/card', cardRouter);
 app.use('/camera', cameraRouter);
 app.use('/friend', friendRouter);
+app.use('/friendAlbum', friendAlbumRouter);
 app.use('/user', userRouter);
 
 const startServer = async () => {
