@@ -5,11 +5,14 @@ import db from '../models';
 const Album = db.album;
 const Card = db.card;
 
-const getAlbums = async (userId, callback) => {
-    await Album.findAll({ where: { user_id: userId } })
+const getAlbums = async (userId, page, size, callback) => {
+    const offset = page * size;
+
+    await Album.findAndCountAll({ where: { user_id: userId }, offset: offset, limit: size, order: [['createdAt', 'DESC']] })
         .then((result) => {
-            Logger.info(`[getAlbums]Success! ${result}`);
-            callback(null, result);
+            const { rows, count } = result;
+            Logger.info(`[getAlbums]Success! ${rows}`);
+            callback(null, rows);
         })
         .catch((err) => {
             Logger.error('[getAlbums]Error', err);
