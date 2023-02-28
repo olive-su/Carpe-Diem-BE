@@ -102,8 +102,8 @@ const wsServer = new Server(socketServer, {
     },
 });
 
-socketServer.listen(5000, () => {
-    console.log(`Listening on port 5000.`);
+socketServer.listen(4001, () => {
+    console.log(`Listening on port 4001.`);
 });
 
 instrument(wsServer, {
