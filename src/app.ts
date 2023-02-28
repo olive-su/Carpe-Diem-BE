@@ -1,9 +1,13 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import express from 'express';
+import http from 'http';
+import https from 'https';
 import cors from 'cors';
-import flash from 'connect-flash';
+import fs from 'fs';
+import { Server } from 'socket.io';
+import { instrument } from '@socket.io/admin-ui';
 import session from 'express-session';
 import mysqlSession from 'express-mysql-session';
+
 import Logger from './loaders/logger';
 import loaders from './loaders';
 import config from './config';
@@ -17,8 +21,21 @@ import cardRouter from './api/card';
 import albumRouter from './api/album';
 import userRouter from './api/user';
 import friendRouter from './api/friend';
+import friendAlbumRouter from './api/friendAlbum';
 
 const app = express();
+let nodeServer;
+let socketServer;
+
+/* Production Env */
+if (config.node_env === 'production') {
+    const credentials = { key: fs.readFileSync(config.ssl.privateKey), cert: fs.readFileSync(config.ssl.certificate) };
+    nodeServer = new https.Server(credentials, app);
+    socketServer = new https.Server(credentials, app);
+} else {
+    nodeServer = new http.Server(app);
+    socketServer = new http.Server(app);
+}
 
 /* Passport */
 const sessionDatabase: PassportDB = {
@@ -31,7 +48,7 @@ const sessionDatabase: PassportDB = {
 const MySqlStore = mysqlSession(session);
 
 app.use(express.json());
-app.use(flash());
+
 app.use(
     cors({
         origin: true,
@@ -48,7 +65,7 @@ app.use(
         saveUninitialized: true,
         cookie: {
             secure: false,
-            maxAge: 24 * 60 * 60 * 1000,
+            maxAge: 12 * 60 * 60 * 1000,
         },
     }),
 );
@@ -57,21 +74,62 @@ const passport = Passport(app);
 
 /* Router */
 app.use('/auth', authRouter(passport));
-app.use('/camera', cameraRouter);
-app.use('/card', cardRouter);
 app.use('/album', albumRouter);
-app.use('/user', userRouter);
+app.use('/card', cardRouter);
+app.use('/camera', cameraRouter);
 app.use('/friend', friendRouter);
+app.use('/friendAlbum', friendAlbumRouter);
+app.use('/user', userRouter);
 
 const startServer = async () => {
     await loaders(app);
 
-    app.listen(config.port, () => {
-        Logger.info(`🛡️  Server listening on: http://${config.host}:${config.port} 🛡️`);
-    }).on('error', (err) => {
-        Logger.error(err);
-        process.exit(1);
-    });
+    nodeServer
+        .listen(config.port, () => {
+            Logger.info(`🛡️  Server listening on: http://${config.host}:${config.port} 🛡️`);
+        })
+        .on('error', (err) => {
+            Logger.error(err);
+            process.exit(1);
+        });
 };
 
 startServer();
+
+/* Socket */
+const wsServer = new Server(socketServer, {
+    cors: {
+        origin: '*',
+        credentials: true,
+    },
+});
+
+socketServer.listen(4001, () => {
+    console.log(`Listening on port 4001.`);
+});
+
+instrument(wsServer, {
+    auth: false,
+});
+
+wsServer.on('connection', (socket) => {
+    // console.log(wsServer.sockets.adapter);
+    socket.on('join_room', (roomName, done) => {
+        socket.join(roomName);
+        console.log(wsServer.sockets.adapter.rooms);
+        socket.to(roomName).emit('welcome');
+    });
+
+    socket.on('offer', (offer, roomName) => {
+        socket.to(roomName).emit('offer', offer);
+    });
+
+    socket.on('answer', (answer, roomName) => {
+        socket.to(roomName).emit('answer', answer);
+    });
+    socket.on('ice', (ice, roomName) => {
+        socket.to(roomName).emit('ice', ice);
+    });
+});
+
+export default app;
