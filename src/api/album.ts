@@ -30,8 +30,6 @@ route.get('/', async (req: Request, res: Response) => {
     let size = 12;
     if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 13) size = sizeAsNumber;
 
-    console.log(page, size);
-
     albumService.getAlbums(userId, page, size, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
         else res.status(statusCode.OK).send(data);
