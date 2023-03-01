@@ -29,7 +29,9 @@ route.get('/:userId', async (req: Request, res: Response) => {
 // 친구 앨범 안의 카드
 route.get('/:userId/:albumId', async (req: Request, res: Response) => {
     // 앨범 기본 정보 로드
-    friendAlbumService.getFriendAlbum(req.params.userId, (err, data) => {
+    const albumDto = { user_id: req.params.userId, album_id: req.params.albumId };
+    console.log(albumDto);
+    friendAlbumService.getFriendAlbum(albumDto, (err, data) => {
         if (err) res.status(statusCode.INTERNAL_SERVER_ERROR).send({ err: err, message: responseMessage.album.server_error });
         const albumData = data.dataValues;
 
