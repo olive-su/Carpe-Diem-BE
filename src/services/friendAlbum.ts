@@ -18,8 +18,8 @@ const getFriendAlbums = async (userId, callback) => {
         });
 };
 
-const getFriendAlbum = (userId, callback) => {
-    Album.findOne({ where: { user_id: userId } })
+const getFriendAlbum = (albumDto, callback) => {
+    Album.findOne({ where: { user_id: albumDto.user_id, album_id: albumDto.album_id } })
         .then((result) => {
             Logger.info(`[getFriendAlbum]Success! ${result}`);
             return callback(null, result);
