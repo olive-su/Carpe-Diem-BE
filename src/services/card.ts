@@ -4,11 +4,14 @@ import db from '../models';
 
 const Card = db.card;
 
-const getCards = async (userId, callback) => {
-    await Card.findAll({ where: { user_id: userId } })
+const getCards = async (userId, page, size, callback) => {
+    const offset = page * size;
+
+    await Card.findAndCountAll({ where: { user_id: userId }, offset: offset, limit: size, order: [['createdAt', 'DESC']] })
         .then((result) => {
-            Logger.info(`[getCards]Success! ${result}`);
-            callback(null, result);
+            const { rows, count } = result;
+            Logger.info(`Success! ${rows}`);
+            callback(null, rows);
         })
         .catch((err) => {
             Logger.error('[getCards]Error', err);
