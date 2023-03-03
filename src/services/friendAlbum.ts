@@ -2,15 +2,23 @@ import { Sequelize } from 'sequelize';
 import Logger from '../loaders/logger';
 import db from '../models';
 
+const User = db.user;
 const Album = db.album;
 const Card = db.card;
 
 const getFriendAlbums = async (userId, callback) => {
-    console.log(userId);
-    await Album.findAll({ where: { user_id: userId } })
-        .then((result) => {
-            Logger.info(`[getFriendAlbums]Success! ${result}`);
-            callback(null, result);
+    await User.findOne({ where: { user_id: userId } })
+        .then(async (result) => {
+            const friendInfo = result;
+            await Album.findAll({ where: { user_id: result.userId } })
+                .then(async (result) => {
+                    Logger.info(`[getFriendAlbums]Success! ${result}`);
+                    callback(null, { friendInfo, result });
+                })
+                .catch((err) => {
+                    Logger.error('[getFriendAlbums]Error', err);
+                    return callback(err);
+                });
         })
         .catch((err) => {
             Logger.error('[getFriendAlbums]Error', err);
