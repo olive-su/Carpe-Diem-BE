@@ -23,6 +23,7 @@ import userRouter from './api/user';
 import friendRouter from './api/friend';
 import friendAlbumRouter from './api/friendAlbum';
 import reportRouter from './api/report';
+import mailRouter from './api/mail';
 
 const app = express();
 let nodeServer;
@@ -82,6 +83,7 @@ app.use('/friend', friendRouter);
 app.use('/friendAlbum', friendAlbumRouter);
 app.use('/user', userRouter);
 app.use('/report', reportRouter);
+app.use('/mail', mailRouter);
 
 const startServer = async () => {
     await loaders(app);
