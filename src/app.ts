@@ -22,6 +22,7 @@ import albumRouter from './api/album';
 import userRouter from './api/user';
 import friendRouter from './api/friend';
 import friendAlbumRouter from './api/friendAlbum';
+import mailRouter from './api/mail';
 
 const app = express();
 let nodeServer;
@@ -80,6 +81,7 @@ app.use('/camera', cameraRouter);
 app.use('/friend', friendRouter);
 app.use('/friendAlbum', friendAlbumRouter);
 app.use('/user', userRouter);
+app.use('/mail', mailRouter);
 
 const startServer = async () => {
     await loaders(app);
