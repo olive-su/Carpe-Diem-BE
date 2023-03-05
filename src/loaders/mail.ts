@@ -17,13 +17,8 @@ const mailSender = {
             to: param.toEmail, // 수신할 이메일
             subject: param.subject, // 메일 제목
             text: param.text, // plain text body
-            // html: '', //html body
-            // attachments: [
-            //     {
-            //         filename: '',
-            //         path: '',
-            //     },
-            // ],
+            html: param.html, //html body
+            attachments: param.attachments,
         };
 
         // 메일 발송
